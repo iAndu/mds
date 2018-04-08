@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
+    use EntrustUserTrait;
     use Notifiable;
 
     /**
@@ -15,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar',
     ];
 
     /**
@@ -26,4 +28,44 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Return tasks assigned to user
+     *
+     * @return Relationship
+     */
+    public function tasks()
+    {
+        return $this->belongsToMany(App\Task::class)->withPivot('role_id');
+    }
+
+    /**
+     * Return user's task comments.
+     *
+     * @return Relationship
+     */
+    public function comments()
+    {
+        return $this->hasMany(App\Comment::class);
+    }
+
+    /**
+     * Return user's projects.
+     *
+     * @return Relationship
+     */
+    public function projects()
+    {
+        return $this->belongsToMany(App\Project::class)->withPivot('role_id');
+    }
+
+    /**
+     * Return user's groups.
+     *
+     * @return Relationship
+     */
+    public function groups()
+    {
+        return $this->hasManyThrough(App\Group::class, App\Project::class);
+    }
 }
