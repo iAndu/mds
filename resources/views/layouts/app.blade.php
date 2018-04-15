@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -27,26 +26,23 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/daterangepicker.js') }}"></script>
 
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/core/app.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/dashboard.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/form_layouts.js') }}"></script>
 
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/ui/ripple.min.js') }}"></script>
     <!-- /theme JS files -->
+
 </head>
+
 <body class="navbar-bottom">
 
 <!-- Main navbar -->
 <div class="navbar navbar-inverse bg-indigo">
     <div class="navbar-header">
-        <a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+        <a class="navbar-brand" href="index.html"><img src="{{ URL::asset('limitless/assets/images/logo_light.png') }}" alt=""></a>
 
         <ul class="nav navbar-nav visible-xs-block">
             <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -148,11 +144,11 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li><a class="deutsch"><img src="assets/images/flags/de.png" alt=""> Deutsch</a></li>
-                    <li><a class="ukrainian"><img src="assets/images/flags/ua.png" alt=""> Українська</a></li>
-                    <li><a class="english"><img src="assets/images/flags/gb.png" alt=""> English</a></li>
-                    <li><a class="espana"><img src="assets/images/flags/es.png" alt=""> España</a></li>
-                    <li><a class="russian"><img src="assets/images/flags/ru.png" alt=""> Русский</a></li>
+                    <li><a class="deutsch"><img src="{{ URL::asset('limitless/assets/images/flags/de.png') }}" alt=""> Deutsch</a></li>
+                    <li><a class="ukrainian"><img src="{{ URL::asset('limitless/assets/images/flags/ua.png') }}" alt=""> Українська</a></li>
+                    <li><a class="english"><img src="{{ URL::asset('limitless/assets/images/flags/gb.png') }}" alt=""> English</a></li>
+                    <li><a class="espana"><img src="{{ URL::asset('limitless/assets/images/flags/es.png') }}" alt=""> España</a></li>
+                    <li><a class="russian"><img src="{{ URL::asset('limitless/assets/images/flags/ru.png') }}" alt=""> Русский</a></li>
                 </ul>
             </li>
 
@@ -174,7 +170,7 @@
                     <ul class="media-list dropdown-content-body">
                         <li class="media">
                             <div class="media-left">
-                                <img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt="">
+                                <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt="">
                                 <span class="badge bg-danger-400 media-badge">5</span>
                             </div>
 
@@ -190,7 +186,7 @@
 
                         <li class="media">
                             <div class="media-left">
-                                <img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt="">
+                                <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt="">
                                 <span class="badge bg-danger-400 media-badge">4</span>
                             </div>
 
@@ -205,7 +201,7 @@
                         </li>
 
                         <li class="media">
-                            <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
+                            <div class="media-left"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></div>
                             <div class="media-body">
                                 <a href="#" class="media-heading">
                                     <span class="text-semibold">Jeremy Victorino</span>
@@ -217,7 +213,7 @@
                         </li>
 
                         <li class="media">
-                            <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
+                            <div class="media-left"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></div>
                             <div class="media-body">
                                 <a href="#" class="media-heading">
                                     <span class="text-semibold">Beatrix Diaz</span>
@@ -229,7 +225,7 @@
                         </li>
 
                         <li class="media">
-                            <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
+                            <div class="media-left"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></div>
                             <div class="media-body">
                                 <a href="#" class="media-heading">
                                     <span class="text-semibold">Richard Vango</span>
@@ -249,7 +245,7 @@
 
             <li class="dropdown dropdown-user">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="assets/images/placeholder.jpg" alt="">
+                    <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" alt="">
                     <span>Victoria</span>
                     <i class="caret"></i>
                 </a>
@@ -329,7 +325,7 @@
                     <div class="sidebar-user-material">
                         <div class="category-content">
                             <div class="sidebar-user-material-content">
-                                <a href="#"><img src="assets/images/placeholder.jpg" class="img-circle img-responsive" alt=""></a>
+                                <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-responsive" alt=""></a>
                                 <h6>Victoria Baker</h6>
                                 <span class="text-size-small">Santa Ana, CA</span>
                             </div>
