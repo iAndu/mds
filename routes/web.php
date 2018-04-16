@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('logout', 'Auth\LoginController@logout');
 Auth::routes();
 
 Route::group(['middleware' => ['web', 'auth']], function () {
