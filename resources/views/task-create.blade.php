@@ -406,7 +406,7 @@
                 <div class="col-md-6">
 
                     <!-- Basic layout-->
-                    <form method="post" {{--action="{{ route('institutions.store') }}" --}} id="task-create"
+                    <form method="post" action="{{ route('tasks.store') }}" id="task-create"
                           enctype="multipart/form-data" class="form-horizontal">
                         @csrf
                         <div class="panel panel-flat">
@@ -473,9 +473,9 @@
                                     <label class="col-lg-3 control-label">Project</label>
                                     <div class="col-lg-9">
                                         <select name="project_id" class="select">
-                                            {{-- @foreach($projects as $project)
+                                            @foreach($projects as $project)
                                                 <option value="{{ $project->id }}"> {{ $project->name }} </option>
-                                            @endforeach --}}
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -492,16 +492,8 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Your avatar:</label>
-                                    <div class="col-lg-9">
-                                        <input name="avatar" type="file" class="file-styled">
-                                        <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
-                                    </div>
-                                </div>
-
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Submit form <i class="icon-arrow-right14 position-right"></i></button>
+                                    <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
                                 </div>
                             </div>
                         </div>
