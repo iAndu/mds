@@ -383,7 +383,7 @@
         <!-- Main content -->
         <div class="content-wrapper">
 
-            {{--@foreach ($projects->chunk(3) as $collection)
+            @foreach ($projects->chunk(3) as $collection)
             <div class="row">
                 @foreach ($collection as $project)
                 <div class="col-md-4">
@@ -404,7 +404,7 @@
                 </div>
                 @endforeach
             </div>
-            @endforeach--}}
+            @endforeach
 
         </div>
         <!-- /main content -->

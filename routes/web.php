@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Route::get('/group-create', function () {
     return view('group-create');
 });
@@ -23,8 +19,14 @@ Route::get('/task-create', function () {
     return view('task-create');
 });
 
-Route::resource('projects', 'ProjectsController');
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['web', 'auth']], function () {
+
+    Route::get('/', function () {
+        return view('index');
+    });
+
+    Route::resource('projects', 'ProjectsController');
+
+});

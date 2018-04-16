@@ -9,6 +9,7 @@ use Auth;
 use App\Group;
 use App\Project;
 use App\User;
+use App\Role;
 
 class ProjectsController extends Controller
 {
@@ -19,9 +20,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        // TODO: Remove when auth is ready
-        $projects = Project::all();
-        // $projects = Auth::user()->projects;
+        $projects = Auth::user()->projects;
 
         return view('projects.index', compact('projects'));
     }
@@ -33,9 +32,7 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        // TODO: Remove when finished auth
-        $groups = Group::all();
-        // $groups = Auth::user()->groups;
+        $groups = Auth::user()->groups()->get();
 
         return view('projects.create', compact('groups'));
     }
@@ -48,6 +45,13 @@ class ProjectsController extends Controller
      */
     public function store(CreateProjectRequest $request)
     {
+        // In case project manager role doesn't exist for some reason, abort
+        $pm = Role::where('name', 'project-manager')->first();
+
+        if (!$pm) {
+            abort(500);
+        }
+
         if ($request->avatar) {
             $path = $request->file('avatar')->store('public/project_avatars');
         } else {
@@ -60,8 +64,7 @@ class ProjectsController extends Controller
             'avatar' => $path
         ]);
 
-        // TODO: Add when finished auth
-        // Auth::user()->projects()->attach($project->id);
+        Auth::user()->projects()->attach([$project->id => ['role_id' => $pm->id]]);
 
         return response()->json([
             'status' => 'success',

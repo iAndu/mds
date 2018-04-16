@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use App\Group;
+use App\Project;
 
 class User extends Authenticatable
 {
@@ -56,16 +58,19 @@ class User extends Authenticatable
      */
     public function projects()
     {
-        return $this->belongsToMany(\App\Project::class, 'project_role_user')->withPivot('role_id');
+        return $this->belongsToMany(Project::class, 'project_role_user')->withPivot('role_id');
     }
 
     /**
      * Return user's groups.
      *
-     * @return Relationship
+     * @return Query
      */
     public function groups()
     {
-        return $this->hasManyThrough(\App\Group::class, \App\Project::class);
+        $groupIds = Project::whereIn('id', $this->projects()->pluck('id'))->pluck('group_id');
+        $userGroups = Group::where('user_id', $this->id);
+
+        return Group::whereIn('id', $groupIds)->union($userGroups);
     }
 }
