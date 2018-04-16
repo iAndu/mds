@@ -26,7 +26,7 @@ class GroupsController extends Controller
      */
     public function create()
     {
-        return view('group-create');
+        return view('groups.create');
     }
 
     /**
@@ -48,6 +48,7 @@ class GroupsController extends Controller
 
         $group = Group::create([
             'name' => $request->name,
+            'user_id' => Auth::user()->id,
             'group_avatar' => $photo_path
         ]);
 
