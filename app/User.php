@@ -36,7 +36,7 @@ class User extends Authenticatable
      */
     public function tasks()
     {
-        return $this->belongsToMany(App\Task::class)->withPivot('role_id');
+        return $this->belongsToMany(\App\Task::class)->withPivot('role_id');
     }
 
     /**
@@ -46,7 +46,7 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany(App\Comment::class);
+        return $this->hasMany(\App\Comment::class);
     }
 
     /**
@@ -56,7 +56,7 @@ class User extends Authenticatable
      */
     public function projects()
     {
-        return $this->belongsToMany(App\Project::class)->withPivot('role_id');
+        return $this->belongsToMany(\App\Project::class, 'project_role_user')->withPivot('role_id');
     }
 
     /**
@@ -66,6 +66,6 @@ class User extends Authenticatable
      */
     public function groups()
     {
-        return $this->hasManyThrough(App\Group::class, App\Project::class);
+        return $this->hasManyThrough(\App\Group::class, \App\Project::class);
     }
 }

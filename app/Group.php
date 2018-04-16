@@ -15,7 +15,7 @@ class Group extends Model
      */
     public function projects()
     {
-        return $this->hasMany(App\Project::class);
+        return $this->hasMany(\App\Project::class);
     }
 
     /**
@@ -25,7 +25,7 @@ class Group extends Model
      */
     public function users()
     {
-        return $this->hasManyThrough(App\User::class, App\Project::class);
+        return $this->hasManyThrough(\App\User::class, \App\Project::class);
     }
 
     /**
@@ -35,6 +35,6 @@ class Group extends Model
      */
     public function tasks()
     {
-        return $this->hasManyThrough(App\Task::class, App\Project::class);
+        return $this->hasManyThrough(\App\Task::class, \App\Project::class);
     }
 }

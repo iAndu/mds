@@ -15,7 +15,7 @@ class Project extends Model
      */
     public function tasks()
     {
-        return $this->hasMany(App\Task::class);
+        return $this->hasMany(\App\Task::class);
     }
 
     /**
@@ -25,7 +25,7 @@ class Project extends Model
      */
     public function group()
     {
-        return $this->belongsTo(App\Group::class);
+        return $this->belongsTo(\App\Group::class);
     }
 
     /**
@@ -35,6 +35,6 @@ class Project extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(App\User::class)->withPivot('role_id');
+        return $this->belongsToMany(\App\User::class, 'project_role_user')->withPivot('role_id');
     }
 }

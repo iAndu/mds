@@ -15,7 +15,7 @@ class Task extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(App\User::class)->withPivot('role_id');
+        return $this->belongsToMany(\App\User::class)->withPivot('role_id');
     }
 
     /**
@@ -25,7 +25,7 @@ class Task extends Model
      */
     public function subTasks()
     {
-        return $this->hasMany(App\Task::class);
+        return $this->hasMany(\App\Task::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class Task extends Model
      */
     public function parentTask()
     {
-        return $this->belongsTo(App\Task::class);
+        return $this->belongsTo(\App\Task::class);
     }
 
     /**
@@ -45,7 +45,7 @@ class Task extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(App\Tag::class);
+        return $this->belongsToMany(\App\Tag::class);
     }
 
     /**
@@ -55,7 +55,7 @@ class Task extends Model
      */
     public function comments()
     {
-        return $this->hasMany(App\Comment::class);
+        return $this->hasMany(\App\Comment::class);
     }
 
     /**
@@ -65,6 +65,6 @@ class Task extends Model
      */
     public function project()
     {
-        return $this->belongsTo(App\Project::class);
+        return $this->belongsTo(\App\Project::class);
     }
 }
