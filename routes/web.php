@@ -15,15 +15,11 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/group-create', function () {
-    return view('group-create');
-});
-
-Route::get('/task-create', function () {
-    return view('task-create');
-});
-
 Route::resource('projects', 'ProjectsController');
+
+Route::resource('groups', 'GroupsController');
+
+Route::resource('tasks', 'TasksController');
 
 Auth::routes();
 

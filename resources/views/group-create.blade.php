@@ -394,7 +394,7 @@
                 <div class="col-md-6">
 
                     <!-- Basic layout-->
-                    <form method="post" {{--action="{{ route('institutions.store') }}" --}} id="group-create"
+                    <form method="POST" action="{{ route('groups.store') }}" id="group-create"
                           enctype="multipart/form-data" class="form-horizontal">
                         @csrf
                         <div class="panel panel-flat">
@@ -419,7 +419,7 @@
                                 </div>
 
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Submit form <i class="icon-arrow-right14 position-right"></i></button>
+                                    <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
                                 </div>
                             </div>
                         </div>
