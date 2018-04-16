@@ -394,7 +394,7 @@
                 <div class="col-md-6">
 
                     <!-- Basic layout-->
-                    <form method="post" {{--action="{{ route('institutions.store') }}" --}} id="project-create"
+                    <form method="post" {{--action="{{ route('institutions.store') }}" --}} id="group-create"
                           enctype="multipart/form-data" class="form-horizontal">
                         @csrf
                         <div class="panel panel-flat">
