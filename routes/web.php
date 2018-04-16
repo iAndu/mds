@@ -12,7 +12,19 @@
 */
 
 Route::get('/', function () {
+    return view('index');
+});
+
+Route::get('/group-create', function () {
+    return view('group-create');
+});
+
+Route::get('/project-create', function () {
     return view('project-create');
+});
+
+Route::get('/task-create', function () {
+    return view('task-create');
 });
 
 Auth::routes();
