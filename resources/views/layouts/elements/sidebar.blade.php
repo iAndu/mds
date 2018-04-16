@@ -35,7 +35,7 @@
                     <li>
                         <a href="#"><i class="icon-copy"></i> <span>Groups</span></a>
                         <ul>
-                            <li><a href="{{ route('groups.index') }}" id="layout1">Group list</a></li>
+                            {{-- <li><a href="{{ route('groups.index') }}" id="layout1">Group list</a></li> --}}
                             <li><a href="{{ route('groups.create') }}" id="layout1">Group create</a></li>
                         </ul>
                     </li>
