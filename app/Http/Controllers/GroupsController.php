@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
 use App\Group;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,7 +16,7 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -45,6 +45,8 @@ class GroupsController extends Controller
         {
             $photo_path = $request->file('avatar')->store('public/group_avatars');
         }
+
+        $photo_path = substr($photo_path, strpos($photo_path, '/') + 1);
 
         $group = Group::create([
             'name' => $request->name,
