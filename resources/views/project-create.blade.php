@@ -527,14 +527,14 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Name:</label>
                                     <div class="col-lg-9">
-                                        <input type="text" class="form-control">
+                                        <input name="name" type="text" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Group</label>
                                     <div class="col-lg-9">
-                                        <select class="select">
+                                        <select name="group_id" class="select">
                                             {{-- @foreach($groups as $group)
                                                 <option value="{{ $group->id }}"> {{ $group->name }} </option>
                                             @endforeach --}}
@@ -545,7 +545,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Your avatar:</label>
                                     <div class="col-lg-9">
-                                        <input type="file" class="file-styled">
+                                        <input name="avatar" type="file" class="file-styled">
                                         <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
                                     </div>
                                 </div>
