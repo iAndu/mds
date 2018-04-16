@@ -14,7 +14,7 @@ class AddAvatarToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('avatar')->default('default.png');
+            $table->string('avatar')->default('public/user_avatars/default.png');
         });
     }
 

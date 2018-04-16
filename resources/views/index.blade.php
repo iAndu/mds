@@ -354,9 +354,9 @@
                             <li>
                                 <a href="#"><i class="icon-stack2"></i> <span>Projects</span></a>
                                 <ul>
-                                    <li><a href="{{-- route('project-create') --}}">Project list</a></li>
-                                    <li><a href="{{-- route('project-list') --}}">Project create</a></li>
-                                    <li><a href="{{-- route('project-view') --}}">Project view</a></li>
+                                    <li><a href="{{-- route('projects.index') --}}">Project list</a></li>
+                                    <li><a href="{{-- route('projects.create') --}}">Project create</a></li>
+                                    <li><a href="{{-- route('project.show') --}}">Project view</a></li>
                                 </ul>
                             </li>
                             <li>

@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->unsignedInteger('group_id');
-            $table->string('avatar')->default('default.png');
+            $table->string('avatar')->default('public/project_avatars/default.png');
         });
 
         Schema::table('tasks', function (Blueprint $table) {

@@ -19,21 +19,11 @@ Route::get('/group-create', function () {
     return view('group-create');
 });
 
-Route::get('/project-create', function () {
-    return view('project-create');
-});
-
 Route::get('/task-create', function () {
     return view('task-create');
 });
 
-Route::get('/project-list', function () {
-    return view('project-list');
-});
-
-Route::get('/project-view', function () {
-    return view('project-view');
-});
+Route::resource('projects', 'ProjectsController');
 
 Auth::routes();
 

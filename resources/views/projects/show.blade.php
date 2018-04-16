@@ -404,7 +404,7 @@
                             <ul class="media-list">
                                 <li class="media-header">Project members</li>
 
-                                {{--@foreach($users as $user)
+                                @foreach($users as $user)
                                     <li class="media">
                                         <div class="media-left media-middle">
                                             <a href="#">
@@ -425,7 +425,7 @@
                                             </ul>
                                         </div>
                                     </li>
-                                @endforeach--}}
+                                @endforeach
                             </ul>
                         </div>
                     </div>

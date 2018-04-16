@@ -356,9 +356,9 @@
                             <li>
                                 <a href="#"><i class="icon-stack2"></i> <span>Projects</span></a>
                                 <ul>
-                                    <li><a href="{{-- route('project-create') --}}">Project list</a></li>
-                                    <li><a href="{{-- route('project-list') --}}">Project create</a></li>
-                                    <li><a href="{{-- route('project-view') --}}">Project view</a></li>
+                                    <li><a href="{{-- route('projects.create') --}}">Project list</a></li>
+                                    <li><a href="{{-- route('projects.index') --}}">Project create</a></li>
+                                    <li><a href="{{-- route('projects.show') --}}">Project view</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -394,7 +394,7 @@
                 <div class="col-md-6">
 
                     <!-- Basic layout-->
-                    <form method="post" {{--action="{{ route('institutions.store') }}" --}} id="project-create"
+                    <form method="post" action="{{ route('projects.store') }}" id="project-create"
                           enctype="multipart/form-data" class="form-horizontal">
                         @csrf
                         <div class="panel panel-flat">
@@ -414,15 +414,15 @@
                                     <label class="col-lg-3 control-label">Group</label>
                                     <div class="col-lg-9">
                                         <select name="group_id" class="select">
-                                            {{-- @foreach($groups as $group)
+                                            @foreach($groups as $group)
                                                 <option value="{{ $group->id }}"> {{ $group->name }} </option>
-                                            @endforeach --}}
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Your avatar:</label>
+                                    <label class="col-lg-3 control-label">Group avatar:</label>
                                     <div class="col-lg-9">
                                         <input name="avatar" type="file" class="file-styled">
                                         <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>

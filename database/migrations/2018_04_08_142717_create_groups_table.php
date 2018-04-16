@@ -17,7 +17,7 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('name');
-            $table->string('group_avatar');
+            $table->string('group_avatar')->default('pubic/group_avatars/default.png');
         });
 
         Schema::table('projects', function (Blueprint $table) {
