@@ -27,6 +27,10 @@ Route::get('/task-create', function () {
     return view('task-create');
 });
 
+Route::get('/project-list', function () {
+    return view('project-list');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
