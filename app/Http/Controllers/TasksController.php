@@ -29,7 +29,7 @@ class TasksController extends Controller
     {
         $projects = Auth::user()->projects()->get();
 
-        return view('task-create', compact('projects'));
+        return view('tasks.create', compact('projects'));
     }
 
     /**

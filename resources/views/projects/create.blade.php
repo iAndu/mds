@@ -364,14 +364,14 @@
                             <li>
                                 <a href="#"><i class="icon-copy"></i> <span>Tasks</span></a>
                                 <ul>
-                                    <li><a href="{{-- route('task-create') --}}" id="layout1">Create task</a></li>
+                                    <li><a href="{{ route('tasks.create') }}" id="layout1">Create task</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#"><i class="icon-copy"></i> <span>Groups</span></a>
                                 <ul>
                                     <li><a href="{{-- route('group-list') --}}" id="layout1">Group list</a></li>
-                                    <li><a href="{{-- route('group-create') --}}" id="layout1">Group create</a></li>
+                                    <li><a href="{{ route('groups.create') }}" id="layout1">Group create</a></li>
                                     <li><a href="{{-- route('group-view') --}}" id="layout1">Group view</a></li>
                                 </ul>
                             </li>
