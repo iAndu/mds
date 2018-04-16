@@ -351,151 +351,30 @@
                     <div class="category-content no-padding">
                         <ul class="navigation navigation-main navigation-accordion">
 
-                            <!-- Main -->
                             <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                            <li><a href="index.html"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                            <li><a href="{{-- route('index') --}}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
                             <li>
-                                <a href="#"><i class="icon-stack2"></i> <span>Page layouts</span></a>
+                                <a href="#"><i class="icon-stack2"></i> <span>Projects</span></a>
                                 <ul>
-                                    <li><a href="layout_navbar_main_fixed.html">Fixed main navbar</a></li>
-                                    <li><a href="layout_navbar_secondary_fixed.html">Fixed secondary navbar</a></li>
-                                    <li><a href="layout_navbar_main_hideable.html">Hideable main navbar</a></li>
-                                    <li><a href="layout_navbar_secondary_hideable.html">Hideable secondary navbar</a></li>
-                                    <li><a href="layout_sidebar_sticky_custom.html">Sticky sidebar (custom scroll)</a></li>
-                                    <li><a href="layout_sidebar_sticky_native.html">Sticky sidebar (native scroll)</a></li>
-                                    <li><a href="layout_footer_fixed.html">Fixed footer</a></li>
-                                    <li class="navigation-divider"></li>
-                                    <li><a href="boxed_default.html">Boxed with default sidebar</a></li>
-                                    <li><a href="boxed_mini.html">Boxed with mini sidebar</a></li>
-                                    <li><a href="boxed_full.html">Boxed full width</a></li>
+                                    <li><a href="{{-- route('project-create') --}}">Project list</a></li>
+                                    <li><a href="{{-- route('project-list') --}}">Project create</a></li>
+                                    <li><a href="{{-- route('project-view') --}}">Project view</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="#"><i class="icon-copy"></i> <span>Layouts</span></a>
+                                <a href="#"><i class="icon-copy"></i> <span>Tasks</span></a>
                                 <ul>
-                                    <li><a href="../../../layout_1/LTR/default/index.html" id="layout1">Layout 1</a></li>
-                                    <li><a href="../../../layout_2/LTR/default/index.html" id="layout2">Layout 2</a></li>
-                                    <li><a href="index.html" id="layout3">Layout 3 <span class="label bg-warning-400">Current</span></a></li>
-                                    <li><a href="../../../layout_4/LTR/default/index.html" id="layout4">Layout 4</a></li>
-                                    <li><a href="../../../layout_5/LTR/default/index.html" id="layout5">Layout 5</a></li>
-                                    <li class="disabled"><a href="../../../layout_6/LTR/default/index.html" id="layout6">Layout 6 <span class="label label-transparent">Coming soon</span></a></li>
+                                    <li><a href="{{-- route('task-create') --}}" id="layout1">Create task</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="#"><i class="icon-droplet2"></i> <span>Color system</span></a>
+                                <a href="#"><i class="icon-copy"></i> <span>Groups</span></a>
                                 <ul>
-                                    <li><a href="colors_primary.html">Primary palette</a></li>
-                                    <li><a href="colors_danger.html">Danger palette</a></li>
-                                    <li><a href="colors_success.html">Success palette</a></li>
-                                    <li><a href="colors_warning.html">Warning palette</a></li>
-                                    <li><a href="colors_info.html">Info palette</a></li>
-                                    <li class="navigation-divider"></li>
-                                    <li><a href="colors_pink.html">Pink palette</a></li>
-                                    <li><a href="colors_violet.html">Violet palette</a></li>
-                                    <li><a href="colors_purple.html">Purple palette</a></li>
-                                    <li><a href="colors_indigo.html">Indigo palette</a></li>
-                                    <li><a href="colors_blue.html">Blue palette</a></li>
-                                    <li><a href="colors_teal.html">Teal palette</a></li>
-                                    <li><a href="colors_green.html">Green palette</a></li>
-                                    <li><a href="colors_orange.html">Orange palette</a></li>
-                                    <li><a href="colors_brown.html">Brown palette</a></li>
-                                    <li><a href="colors_grey.html">Grey palette</a></li>
-                                    <li><a href="colors_slate.html">Slate palette</a></li>
+                                    <li><a href="{{-- route('group-list') --}}" id="layout1">Group list</a></li>
+                                    <li><a href="{{-- route('group-create') --}}" id="layout1">Group create</a></li>
+                                    <li><a href="{{-- route('group-view') --}}" id="layout1">Group view</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="#"><i class="icon-stack"></i> <span>Starter kit</span></a>
-                                <ul>
-                                    <li><a href="starters/horizontal_nav.html">Horizontal navigation</a></li>
-                                    <li><a href="starters/1_col.html">1 column</a></li>
-                                    <li><a href="starters/2_col.html">2 columns</a></li>
-                                    <li>
-                                        <a href="#">3 columns</a>
-                                        <ul>
-                                            <li><a href="starters/3_col_dual.html">Dual sidebars</a></li>
-                                            <li><a href="starters/3_col_double.html">Double sidebars</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="starters/4_col.html">4 columns</a></li>
-                                    <li><a href="starters/layout_boxed.html">Boxed layout</a></li>
-                                    <li class="navigation-divider"></li>
-                                    <li><a href="starters/layout_navbar_fixed_main.html">Fixed main navbar</a></li>
-                                    <li><a href="starters/layout_navbar_fixed_secondary.html">Fixed secondary navbar</a></li>
-                                    <li><a href="starters/layout_navbar_fixed_both.html">Both navbars fixed</a></li>
-                                    <li><a href="starters/layout_sidebar_sticky.html">Sticky sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="changelog.html"><i class="icon-list-unordered"></i> <span>Changelog <span class="label bg-blue-400">1.6</span></span></a></li>
-                            <li><a href="../../RTL/default/index.html"><i class="icon-width"></i> <span>RTL version</span></a></li>
-                            <!-- /main -->
-
-                            <!-- Forms -->
-                            <li class="navigation-header"><span>Forms</span> <i class="icon-menu" title="Forms"></i></li>
-                            <li>
-                                <a href="#"><i class="icon-pencil3"></i> <span>Form components</span></a>
-                                <ul>
-                                    <li><a href="form_inputs_basic.html">Basic inputs</a></li>
-                                    <li><a href="form_checkboxes_radios.html">Checkboxes &amp; radios</a></li>
-                                    <li><a href="form_input_groups.html">Input groups</a></li>
-                                    <li><a href="form_controls_extended.html">Extended controls</a></li>
-                                    <li><a href="form_floating_labels.html">Floating labels</a></li>
-                                    <li>
-                                        <a href="#">Selects</a>
-                                        <ul>
-                                            <li><a href="form_select2.html">Select2 selects</a></li>
-                                            <li><a href="form_multiselect.html">Bootstrap multiselect</a></li>
-                                            <li><a href="form_select_box_it.html">SelectBoxIt selects</a></li>
-                                            <li><a href="form_bootstrap_select.html">Bootstrap selects</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="form_tag_inputs.html">Tag inputs</a></li>
-                                    <li><a href="form_dual_listboxes.html">Dual Listboxes</a></li>
-                                    <li><a href="form_editable.html">Editable forms</a></li>
-                                    <li><a href="form_validation.html">Validation</a></li>
-                                    <li><a href="form_inputs_grid.html">Inputs grid</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon-file-css"></i> <span>JSON forms</span></a>
-                                <ul>
-                                    <li><a href="alpaca_basic.html">Basic inputs</a></li>
-                                    <li><a href="alpaca_advanced.html">Advanced inputs</a></li>
-                                    <li><a href="alpaca_controls.html">Controls</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon-footprint"></i> <span>Wizards</span></a>
-                                <ul>
-                                    <li><a href="wizard_steps.html">Steps wizard</a></li>
-                                    <li><a href="wizard_form.html">Form wizard</a></li>
-                                    <li><a href="wizard_stepy.html">Stepy wizard</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon-spell-check"></i> <span>Editors</span></a>
-                                <ul>
-                                    <li><a href="editor_summernote.html">Summernote editor</a></li>
-                                    <li><a href="editor_ckeditor.html">CKEditor</a></li>
-                                    <li><a href="editor_wysihtml5.html">WYSIHTML5 editor</a></li>
-                                    <li><a href="editor_code.html">Code editor</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon-select2"></i> <span>Pickers</span></a>
-                                <ul>
-                                    <li><a href="picker_date.html">Date &amp; time pickers</a></li>
-                                    <li><a href="picker_color.html">Color pickers</a></li>
-                                    <li><a href="picker_location.html">Location pickers</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon-insert-template"></i> <span>Form layouts</span></a>
-                                <ul>
-                                    <li><a href="form_layout_vertical.html">Vertical form</a></li>
-                                    <li class="active"><a href="form_layout_horizontal.html">Horizontal form</a></li>
-                                </ul>
-                            </li>
-                            <!-- /forms -->
 
                         </ul>
                     </div>

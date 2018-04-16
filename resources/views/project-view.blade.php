@@ -390,7 +390,7 @@
                     <!-- Simple list -->
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h5 class="panel-title">Simple user list</h5>
+                            <h5 class="panel-title">Project list</h5>
                             <div class="heading-elements">
                                 <ul class="icons-list">
                                     <li><a data-action="collapse"></a></li>
@@ -402,263 +402,30 @@
 
                         <div class="panel-body">
                             <ul class="media-list">
-                                <li class="media-header">Team leaders</li>
+                                <li class="media-header">Project members</li>
 
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
+                                {{--@foreach($users as $user)
+                                    <li class="media">
+                                        <div class="media-left media-middle">
+                                            <a href="#">
+                                                <img src="{{ $user->avatar }}" class="img-circle img-md" alt="">
+                                            </a>
+                                        </div>
 
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">James Alexander</div>
-                                        <span class="text-muted">Development</span>
-                                    </div>
+                                        <div class="media-body">
+                                            <div class="media-heading text-semibold">{{ $user->name }}</div>
+                                            <span class="text-muted">Development</span>
+                                        </div>
 
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Jeremy Victorino</div>
-                                        <span class="text-muted">Finances</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Margo Baker</div>
-                                        <span class="text-muted">Marketing</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Monica Smith</div>
-                                        <span class="text-muted">Design</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media-header">Office staff</li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Bastian Miller</div>
-                                        <span class="text-muted">Web dev</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Jordana Mills</div>
-                                        <span class="text-muted">Sales consultant</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Buzz Brenson</div>
-                                        <span class="text-muted">UX expert</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Zachary Willson</div>
-                                        <span class="text-muted">Illustrator</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">William Miles</div>
-                                        <span class="text-muted">SEO expert</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media-header">Partners</li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Freddy Walden</div>
-                                        <span class="text-muted">Microsoft</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Dori Laperriere</div>
-                                        <span class="text-muted">Google</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="media-left media-middle">
-                                        <a href="#">
-                                            <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-md" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="media-heading text-semibold">Vanessa Aurelius</div>
-                                        <span class="text-muted">Facebook</span>
-                                    </div>
-
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
+                                        <div class="media-right media-middle">
+                                            <ul class="icons-list icons-list-extended text-nowrap">
+                                                <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
+                                                <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
+                                                <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endforeach--}}
                             </ul>
                         </div>
                     </div>
