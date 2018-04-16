@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
 
 class CreateProjectRequest extends FormRequest
 {
@@ -13,8 +14,7 @@ class CreateProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
-        // return Auth::user()->groups()->find($this->group_id) != null;
+        return Auth::user()->groups()->find($this->group_id) != null;
     }
 
     /**

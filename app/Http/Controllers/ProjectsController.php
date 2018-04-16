@@ -58,6 +58,8 @@ class ProjectsController extends Controller
             $path = 'public/project_avatars/default.png';
         }
 
+        $path = substr($path, strpos($path, '/') + 1);
+
         $project = Project::create([
             'name' => $request->name,
             'group_id' => $request->group_id,
