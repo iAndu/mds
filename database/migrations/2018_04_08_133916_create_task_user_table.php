@@ -15,14 +15,12 @@ class CreateTaskUserTable extends Migration
     {
         Schema::create('task_user', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('project_id');
-            $table->unsignedInteger('role_id');            
+            $table->unsignedInteger('task_id');
         });
 
-        // TODO: Add foreign key
         Schema::table('task_user', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('task_id')->references('id')->on('tasks');
         });
     }
 
@@ -35,7 +33,7 @@ class CreateTaskUserTable extends Migration
     {
         Schema::table('task_user', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
-            $table->dropForeign(['role_id']);
+            $table->dropForeign(['task_id']);
         });
         
         Schema::dropIfExists('task_user');
