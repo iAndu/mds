@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @foreach ($tasks->chunk(3) as $collection)
+    @foreach (array_chunk($tasks, 3) as $collection)
         <div class="row">
             @foreach ($collection as $task)
                 <div class="col-md-4">
