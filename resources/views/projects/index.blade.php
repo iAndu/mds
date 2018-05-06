@@ -26,7 +26,7 @@
                 <div class="caption-overflow">
 									<span>
                                         <a href="#" class="btn bg-success-400 btn-icon legitRipple"
-                                           data-toggle="modal" data-target="#modal_project"><i class="icon-eye"></i></a>
+                                           data-toggle="modal" data-target="#modal_project{{ $project->id }}"><i class="icon-eye"></i></a>
 										<a href="#" class="btn bg-success-400 btn-icon legitRipple"><i class="icon-pencil"></i></a>
 									</span>
                 </div>
@@ -36,9 +36,7 @@
 
             </div>
         </div>
-    </div>
-    @endforeach
-        <div id="modal_project" class="modal fade" style="display: none;">
+        <div id="modal_project{{ $project->id }}" class="modal fade" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -50,7 +48,7 @@
                         <ul class="media-list">
                             <li class="media-header">Project members</li>
 
-                            {{--@foreach($users as $user)
+                            @foreach($project->users as $user)
                                 <li class="media">
                                     <div class="media-left media-middle">
                                         <a href="#">
@@ -65,13 +63,11 @@
 
                                     <div class="media-right media-middle">
                                         <ul class="icons-list icons-list-extended text-nowrap">
-                                            <li><a href="#" data-popup="tooltip" title="Call" data-toggle="modal" data-target="#call"><i class="icon-phone2"></i></a></li>
                                             <li><a href="#" data-popup="tooltip" title="Chat" data-toggle="modal" data-target="#chat"><i class="icon-comment"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li>
                                         </ul>
                                     </div>
                                 </li>
-                            @endforeach --}}
+                            @endforeach
                         </ul>
                     </div>
 
@@ -81,6 +77,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    @endforeach
 </div>
 @endforeach
 
@@ -119,11 +117,6 @@
                     $(this).removeClass("animated " + animationData);
                 });
             }
-
-            //modal handling
-            $('a[data-target="#modal_project"]').each(function(i) {
-                console.log(i);
-            });
         });
     </script>
 @endpush
