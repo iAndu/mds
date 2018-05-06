@@ -29,6 +29,7 @@
                     <li>
                         <a href="#"><i class="icon-copy"></i> <span>Tasks</span></a>
                         <ul>
+                            <li><a href="{{ route('tasks.index') }}" id="layout1">My tasks</a></li>
                             <li><a href="{{ route('tasks.create') }}" id="layout1">Create task</a></li>
                         </ul>
                     </li>
