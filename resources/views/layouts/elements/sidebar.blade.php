@@ -31,7 +31,7 @@
                         <ul>
                             <li><a href="{{ route('tasks.index') }}" id="layout1">My tasks</a></li>
                             <li><a href="{{ route('tasks.create') }}" id="layout1">Create task</a></li>
-                            <li><a href="{{ route('tasks.show') }}" id="layout1">Show tasks</a></li>
+                            <li><a href="{{ route('tasks.all') }}" id="layout1">All tasks</a></li>
                         </ul>
                     </li>
                     <li>

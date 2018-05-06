@@ -64,9 +64,7 @@ class TasksController extends Controller
      */
     public function show()
     {
-        $tasks = [];
 
-        return view('tasks.show', compact('tasks'));
     }
 
     /**
@@ -90,6 +88,13 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function all()
+    {
+        $tasks = [];
+
+        return view('tasks.all', compact('tasks'));
     }
 
     /**
