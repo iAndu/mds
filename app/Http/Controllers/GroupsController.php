@@ -46,7 +46,7 @@ class GroupsController extends Controller
             $photo_path = $request->file('avatar')->store('public/group_avatars');
         }
 
-        $photo_path = substr($photo_path, strpos($photo_path, '/') + 1);
+        $photo_path = 'storage/' . substr($photo_path, strpos($photo_path, '/') + 1);
 
         $group = Group::create([
             'name' => $request->name,

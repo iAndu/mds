@@ -22,7 +22,7 @@
             </div>
 
             <div class="thumb">
-                <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" alt="">
+                <img src="{{ asset($project->avatar) }}" alt="">
                 <div class="caption-overflow">
 									<span>
                                         <a href="#" class="btn bg-success-400 btn-icon legitRipple"><i class="icon-eye"></i></a>

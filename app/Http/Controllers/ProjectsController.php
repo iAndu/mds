@@ -58,7 +58,7 @@ class ProjectsController extends Controller
             $path = 'public/project_avatars/default.png';
         }
 
-        $path = substr($path, strpos($path, '/') + 1);
+        $path = 'storage/' . substr($path, strpos($path, '/') + 1);
 
         $project = Project::create([
             'name' => $request->name,

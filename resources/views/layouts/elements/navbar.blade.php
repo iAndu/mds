@@ -186,7 +186,7 @@
 
             <li class="dropdown dropdown-user">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" alt="">
+                    <img src={{ asset(Auth::user()->avatar) }} alt="">
                     <span>{{ Auth::user()->name }}</span>
                     <i class="caret"></i>
                 </a>

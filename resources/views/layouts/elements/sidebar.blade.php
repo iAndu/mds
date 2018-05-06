@@ -7,7 +7,7 @@
             <div class="sidebar-user-material">
                 <div class="category-content">
                     <div class="sidebar-user-material-content">
-                        <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-responsive" alt=""></a>
+                        <a href="#"><img src={{ asset(Auth::user()->avatar) }} class="img-circle img-responsive" alt=""></a>
                         <h6>{{ Auth::user()->name }}</h6>
                         <span class="text-size-small">{{ Auth::user()->email }}</span>
                     </div>
