@@ -62,9 +62,11 @@ class TasksController extends Controller
      * @param  int  $task
      * @return \Illuminate\Http\Response
      */
-    public function show($task)
+    public function show()
     {
-        //
+        $tasks = [];
+
+        return view('tasks.show', compact('tasks'));
     }
 
     /**

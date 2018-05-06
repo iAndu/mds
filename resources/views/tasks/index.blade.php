@@ -6,7 +6,9 @@
 <div class="row">
     @foreach ($collection as $task)
     <div class="col-md-4">
-        <div class="panel panel-white">
+        <div class="panel panel-white animation" data-animation="
+                {{ $loop->index == 0 ? 'zoomInLeft' : ($loop->index == 1 ? 'zoomIn' : ($loop->index == 2 ? 'zoomInRight' : 'flip')) }}
+                ">
             <div class="panel-heading">
                 <h6 class="panel-title"> {{ $task->title }} <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
                 <div class="heading-elements">
@@ -69,7 +71,7 @@
 @push('css')
     <link href="{{ URL::asset('limitless/assets/css/extras/animate.min.css') }}" rel="stylesheet" type="text/css">
     <style type="text/css">
-        .thumbnail.animation {
+        .panel.animation {
             visibility: hidden; /* set to hidden until all is loaded, so we have smooth animation */
         }
     </style>
