@@ -6,7 +6,7 @@
 <div class="row">
     @foreach ($collection as $project)
     <div class="col-md-4">
-        <div class="thumbnail">
+        <div class="thumbnail animation" data-animation="zoomIn">
             <div class="panel-heading">
                 <h6 class="panel-title">{{ $project->name }}<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
                 <div class="heading-elements">
@@ -39,6 +39,10 @@
 
 @endsection
 
+@push('css')
+    <link href="{{ URL::asset('limitless/assets/css/extras/animate.min.css') }}" rel="stylesheet" type="text/css">
+@endpush
+
 @push('js')
 
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
@@ -46,4 +50,18 @@
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/components_thumbnails.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/animations_css3.js') }}"></script>
 
+    <script type="text/javascript">
+        $(window).load(function(){
+            var animations = $(".animation");
+
+            for(var i = 0 ; i < animations.length ; i++)
+            {
+                let animationData = $(animations[i]).data("animation");
+
+                $(animations[i]).addClass("animated " + animationData).one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+                    $(this).removeClass("animated " + animationData);
+                });
+            }
+        });
+    </script>
 @endpush

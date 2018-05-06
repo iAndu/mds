@@ -18,6 +18,7 @@
     <link href="{{ URL::asset('limitless/assets/css/colors.css') }}" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
+    @stack('css')
 </head>
 
 <body class="navbar-bottom">
