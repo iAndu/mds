@@ -80,9 +80,8 @@ class ProjectsController extends Controller
      * @param  Project  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $id)
+    public function show(Project $project)
     {
-        $project = $id;
         $users = $project->users;
 
         return view('projects.show', compact('project', 'users'));

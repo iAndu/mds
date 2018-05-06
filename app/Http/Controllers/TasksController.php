@@ -59,10 +59,10 @@ class TasksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $task
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($task)
     {
         //
     }
