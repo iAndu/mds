@@ -58,7 +58,7 @@ class ProjectsController extends Controller
             $path = 'public/project_avatars/default.png';
         }
 
-        $path = substr($path, strpos($path, '/') + 1);
+        $path = 'storage/' . substr($path, strpos($path, '/') + 1);
 
         $project = Project::create([
             'name' => $request->name,
@@ -80,9 +80,8 @@ class ProjectsController extends Controller
      * @param  Project  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $id)
+    public function show(Project $project)
     {
-        $project = $id;
         $users = $project->users;
 
         return view('projects.show', compact('project', 'users'));
