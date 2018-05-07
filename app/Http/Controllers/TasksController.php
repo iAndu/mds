@@ -93,16 +93,17 @@ class TasksController extends Controller
     public function all()
     {
         $projects = Auth::user()->projects()->get();
-        $tasks = [];
+        $tasksByProjects = [];
         foreach($projects as $project)
         {
             foreach($project->tasks as $task)
             {
-                $tasks[$project->id][$task->id] = $task; //group by project, and then by task
+                $tasksByProjects[$project->id]['project'] = $project;
+                $tasksByProjects[$project->id]['tasks'][$task->id] = $task;
             }
         }
-
-        return view('tasks.all', compact('tasks'));
+        //dd($tasksByProjects);
+        return view('tasks.all', compact('tasksByProjects'));
     }
 
     /**
