@@ -100,6 +100,9 @@ class TasksController extends Controller
             {
                 $tasksByProjects[$project->id]['project'] = $project;
                 $tasksByProjects[$project->id]['tasks'][$task->id] = $task;
+                //$tasksByProjects[$project->id]['users'] = $project->users;
+                //pe aceeasi idee, trebuie in 'users' sa stim toti userii din proiect, dar
+                //sa stim si la ce task-uri este implicat, astfel incat in tasks.all sa stim care sa fie bifati initial
             }
         }
         //dd($tasksByProjects);
