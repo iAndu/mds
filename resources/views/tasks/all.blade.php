@@ -36,7 +36,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">×</button>
-                                        <h5 class="modal-title"> {{ $taskInfo['task']->title }}</h5>
+                                        <h3 class="modal-title"> {{ $taskInfo['task']->title }}</h3>
                                     </div>
 
                                     <div class="modal-body">
@@ -122,6 +122,14 @@
                                                                             <h6 class="panel-title">
                                                                                 <a data-toggle="collapse" href="#collapsible-control-group{{ $subTask->id }}"
                                                                                    aria-expanded="false" class="collapsed">{{ $subTask->title }}</a>
+                                                                                <span class="pull-right">
+                                                                                    <button type="button" class="btn btn-@php echo $priorityToStyle[$subTask->priority] @endphp check"
+                                                                                    data-style="@php echo $priorityToStyle[$subTask->priority] @endphp"
+                                                                                    data-checked="{{ $subTask->finished == 1 ? "1" : "0" }}"
+                                                                                    >
+                                                                                        <i class="icon-circle"></i>
+                                                                                    </button>
+                                                                                </span>
                                                                             </h6>
                                                                         </div>
                                                                         <div id="collapsible-control-group{{ $subTask->id }}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -222,6 +230,33 @@
                 $(animations[i]).css('visibility', 'visible');
                 $(animations[i]).addClass("animated " + animationData).one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
                     $(this).removeClass("animated " + animationData);
+                });
+            }
+
+            let checks = $('.check');
+            for(let i = 0 ; i < checks.length ; i++)
+            {
+                $(checks[i]).hover(function() {
+                    $(this).find('i').attr('class', 'icon-checkmark-circle');
+                }, function() {
+                    $(this).find('i').attr('class', 'icon-circle');
+                });
+
+                $(checks[i]).click(function() {
+                    let style = $(this).data('style');
+                    let checked = $(this).data('checked');
+
+                    if(checked === 0)
+                    {
+                        $(this).closest('div.panel-heading').removeClass('bg-' + style).addClass('bg-success');
+                        $(this).removeClass('btn-' + style).addClass('btn-success');
+                        $(this).data('checked', 1);
+                    }
+                    else {
+                        $(this).closest('div.panel-heading').removeClass('bg-success').addClass('bg-' + style);
+                        $(this).removeClass('btn-success').addClass('btn-' + style);
+                        $(this).data('checked', 0);
+                    }
                 });
             }
         });
