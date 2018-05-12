@@ -10,15 +10,15 @@
             </div>
         @foreach (array_chunk($tasksByProject['tasks'], 3) as $collection)
             <div class="row">
-                @foreach ($collection as $task)
+                @foreach ($collection as $taskInfo)
                     <div class="col-md-4">
-                        <div class="panel panel-white animation" data-animation="fadeInDownBig">
-                            <div class="panel-heading">
-                                <h6 class="panel-title"> {{ $task->title }} <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                        <div class="panel animation" data-animation="fadeInDownBig">
+                            <div class="panel-heading bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp">
+                                <h6 class="panel-title">{{ $taskInfo['task']->title }}</h6>
                                 <div class="heading-elements">
                                     <ul class="icons-list">
                                         <li><a href="#" class="btn btn-icon legitRipple"
-                                               data-toggle="modal" data-target="#modal_task{{ $task->id }}">
+                                               data-toggle="modal" data-target="#modal_task{{ $taskInfo['task']->id }}">
                                                 <i class="icon-eye"></i>
                                             </a>
                                         </li>
@@ -27,22 +27,22 @@
                             </div>
 
                             <div class="panel-body">
-                                {{ $task->description }}
+                                {{ $taskInfo['task']->description }}
                             </div>
                         </div>
                         <!-- modal for task -->
-                        <div id="modal_task{{ $task->id }}" class="modal fade" style="display: none;">
+                        <div id="modal_task{{ $taskInfo['task']->id }}" class="modal fade" style="display: none;">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">×</button>
-                                        <h5 class="modal-title"> {{ $task->title }}</h5>
+                                        <h5 class="modal-title"> {{ $taskInfo['task']->title }}</h5>
                                     </div>
 
                                     <div class="modal-body">
                                         <ul class="media-list">
                                             <li class="media-header">
-                                                <i class="glyphicon glyphicon-align-left"></i>Description
+                                                <i class="glyphicon glyphicon-align-left"></i> Description
                                             </li>
                                             <li class="media">
                                                 <div class="media-left media-middle">
@@ -58,24 +58,121 @@
                                                 </div>
                                             </li>
                                             <li class="media-header">
-                                                Will be adding other details here soon.
+                                                <i class="icon-calendar5"></i> Deadline
                                             </li>
+                                            <li class="media">
+                                                <div class="media-left media-middle">
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <input
+                                                            name="deadline"
+                                                            type="text"
+                                                            class="form-control pickadate picker__input"
+                                                            placeholder="
+                                                            @php
+                                                                $date = new DateTime($taskInfo['task']->deadline);
+                                                                echo $date->format('Y-m-d  H:i');
+                                                            @endphp
+                                                            "
+                                                            readonly=""
+                                                            id="P1978734162"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false"
+                                                            aria-readonly="false"
+                                                            aria-owns="P1978734162_root"
+                                                    >
+                                                </div>
+
+                                                <div class="media-right media-middle">
+                                                </div>
+                                            </li>
+                                            <li class="media-header">
+                                                <i class="glyphicon glyphicon-list-alt"></i> Priority
+                                            </li>
+                                            <li class="media">
+                                                <div class="media-left media-middle">
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <div class="alert bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp alert-styled-left">
+                                                        @php echo ucfirst($taskInfo['task']->priority) @endphp
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-right media-middle">
+                                                </div>
+                                            </li>
+                                            @if(!empty($taskInfo['subTasks']))
+                                                <li class="media-header">
+                                                    Subtasks
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-left media-middle">
+                                                    </div>
+
+                                                    <div class="media-body">
+                                                        <div class="col-lg-12">
+                                                            <div class="panel-group panel-group-control content-group-lg">
+                                                                @foreach($taskInfo['subTasks'] as $subTask)
+                                                                    <div class="panel">
+                                                                        <div class="panel-heading bg-@php echo $priorityToStyle[$subTask->priority] @endphp">
+                                                                            <h6 class="panel-title">
+                                                                                <a data-toggle="collapse" href="#collapsible-control-group{{ $subTask->id }}"
+                                                                                   aria-expanded="false" class="collapsed">{{ $subTask->title }}</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                        <div id="collapsible-control-group{{ $subTask->id }}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                            <div class="panel-body">
+                                                                                {{ $subTask->description }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="media-right media-middle">
+                                                    </div>
+                                                </li>
+                                            @endif
                                             <li class="media-header">
                                                 Assignees
                                             </li>
-                                            <form method="post" action="{{ route('projects.store') }}" id="project-create"
-                                                  enctype="multipart/form-data" class="form-horizontal">
-                                                @csrf
-                                                @foreach($tasksByProject['project']->users as $user)
-                                                    <div class="checkbox">
-                                                        <label for="{{ $user->name }}"> {{ $user->name }} </label>
-                                                        <input id="{{ $user->name }}" name="assignedUsers" type="checkbox" class="styled">
-                                                    </div>
-                                                @endforeach
-                                                <div class="text-right">
-                                                    <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                                            <li class="media">
+                                                <div class="media-left media-middle">
                                                 </div>
-                                            </form>
+
+                                                <div class="media-body">
+                                                    <div class="col-lg-12">
+                                                        <form method="post" action="{{ route('projects.store') }}" id="project-create"
+                                                              enctype="multipart/form-data" class="form-horizontal">
+                                                            @csrf
+                                                            @foreach($taskInfo['usersWithAssigned'] as $userInfo)
+                                                                <div class="checkbox">
+                                                                    <label for="{{ $userInfo['user']->name }}"> {{ $userInfo['user']->name }} </label>
+                                                                    <input
+                                                                            id="{{ $userInfo['user']->name }}"
+                                                                            name="assignedUsers{{ $taskInfo['task']->id }}"
+                                                                            type="checkbox"
+                                                                            class="styled"
+                                                                            @if($userInfo['isAssigned'] == true)
+                                                                                checked
+                                                                            @endif
+                                                                    >
+                                                                </div>
+                                                            @endforeach
+                                                            <div class="text-right">
+                                                                <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-right media-middle">
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -100,7 +197,7 @@
             visibility: hidden; /* set to hidden until all is loaded, so we have smooth animation */
         }
 
-        .panel.panel-white.animation { /* small fix for better appearance */
+        .panel.animation { /* small fix for better appearance */
             margin: 5px 5px 5px 5px;
         }
     </style>
