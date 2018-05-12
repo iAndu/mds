@@ -12,7 +12,7 @@
             @csrf
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <h5 class="panel-title">Create project</h5>
+                    <h5 class="panel-title">Create group</h5>
                 </div>
 
                 <div class="panel-body">

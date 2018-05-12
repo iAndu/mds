@@ -36,7 +36,7 @@
                             <div class="content-group-lg">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="icon-calendar5"></i></span>
-                                    <input name="deadline" type="text" class="form-control pickadate picker__input" placeholder="Try me…" readonly="" id="P1978734162" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1978734162_root">
+                                    <input name="deadline" type="text" class="form-control pickadate picker__input" placeholder="Pick a date" readonly="" id="P1978734162" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1978734162_root">
                                     <div class="picker" id="P1978734162_root" aria-hidden="true">
                                         <div class="picker__holder" tabindex="-1">
                                             <div class="picker__frame">
