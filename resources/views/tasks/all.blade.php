@@ -50,7 +50,9 @@
 
                                                 <div class="media-body">
                                                     <div class="col-lg-10">
-                                                        <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea"></textarea>
+                                                        <textarea rows="3" cols="5" class="form-control" placeholder="Default textarea">
+                                                            {{ $taskInfo['task']->description }}
+                                                        </textarea>
                                                     </div>
                                                 </div>
 
@@ -105,7 +107,7 @@
                                             </li>
                                             @if(!empty($taskInfo['subTasks']))
                                                 <li class="media-header">
-                                                    Subtasks
+                                                    <i class="glyphicon glyphicon-list-alt"></i> Subtasks
                                                 </li>
                                                 <li class="media">
                                                     <div class="media-left media-middle">
@@ -138,7 +140,7 @@
                                                 </li>
                                             @endif
                                             <li class="media-header">
-                                                Assignees
+                                                <i class="glyphicon glyphicon-user"></i> Assignees
                                             </li>
                                             <li class="media">
                                                 <div class="media-left media-middle">
