@@ -90,7 +90,7 @@
                                                 </div>
                                             </li>
                                             <li class="media-header">
-                                                <i class="glyphicon glyphicon-list-alt"></i> Priority
+                                                <i class="glyphicon glyphicon-time"></i> Priority
                                             </li>
                                             <li class="media">
                                                 <div class="media-left media-middle">

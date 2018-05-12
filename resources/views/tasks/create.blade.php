@@ -93,9 +93,53 @@
                         </div>
                     </div>
 
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Subtasks</label>
+                        <div class="col-lg-9">
+                            <button id="addSubTask" type="button" class="btn btn-success">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </button>
+                        </div>
                     </div>
+                    @foreach(range(1, 20) as $item)
+                        <div id="subTask{{ $item }}" class="panel panel-flat hidden">
+                            <div class="panel-heading">
+                                <button type="button" class="btn btn-danger btnRemove" data-id="{{ $item }}">
+                                    <i class="glyphicon glyphicon-minus"></i> Remove
+                                </button>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" for="subTaskTitle{{ $item }}">Title</label>
+                                    <div class="col-lg-9">
+                                        <input id="subTaskTitle{{ $item }}" name="subTaskTitle{{ $item }}" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" for="subTaskDescription{{ $item }}">Description</label>
+                                    <div class="col-lg-9">
+                                        <input id="subTaskDescription{{ $item }}" name="subTaskDescription{{ $item }}" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" for="subTaskPriority{{ $item }}">Priority</label>
+                                    <div class="col-lg-9">
+                                        <select id="subTaskPriority{{ $item }}" name="subTaskPriority{{ $item }}" class="select">
+                                            <option value="1">Low</option>
+                                            <option value="2">Normal</option>
+                                            <option value="3">High</option>
+                                            <option value="4">Urgent</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <div class="text-right">
+                        <button id="taskCreateSubmit" type="button" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                    </div> <!-- submit action is overriden below -->
                 </div>
             </div>
         </form>
@@ -108,14 +152,41 @@
 
 @push('js')
 
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/daterangepicker.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/anytime.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/picker.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/picker_date.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/anytime.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/picker.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/picker_date.js') }}"></script>
 
+    <script type="text/javascript">
+        $(window).load(function(){
+            id = 1;
+
+            $('#addSubTask').on('click', function(e) {
+                if(id <= 20)
+                {
+                    $('#subTask' + id).removeClass('hidden');
+                    id++;
+                }
+            });
+
+            let btnRemoves = $('.btnRemove');
+            for(let i = 0 ; i < btnRemoves.length ; i++)
+            {
+                $(btnRemoves[i]).on('click', function(e) {
+                   let subTaskId = $(this).data('id');
+                   $('#subTask' + subTaskId).addClass('hidden');
+                });
+            }
+
+            $('#taskCreateSubmit').on('click', function(e) {
+                $('.hidden').remove();
+                $('#task-create').submit();
+            });
+        });
+    </script>
 @endpush
