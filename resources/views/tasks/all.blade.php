@@ -16,13 +16,11 @@
                             <div class="panel-heading bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp">
                                 <h6 class="panel-title">{{ $taskInfo['task']->title }}</h6>
                                 <div class="heading-elements">
-                                    <ul class="icons-list">
-                                        <li><a href="#" class="btn btn-icon legitRipple"
+                                    <a href="#" class="btn btn-icon bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp legitRipple"
                                                data-toggle="modal" data-target="#modal_task{{ $taskInfo['task']->id }}">
                                                 <i class="icon-eye"></i>
                                             </a>
-                                        </li>
-                                    </ul>
+
                                 </div>
                             </div>
 
@@ -122,15 +120,15 @@
                                                                             <h6 class="panel-title">
                                                                                 <a data-toggle="collapse" href="#collapsible-control-group{{ $subTask->id }}"
                                                                                    aria-expanded="false" class="collapsed">{{ $subTask->title }}</a>
-                                                                                <span class="pull-right">
-                                                                                    <button type="button" class="btn btn-@php echo $priorityToStyle[$subTask->priority] @endphp check"
-                                                                                    data-style="@php echo $priorityToStyle[$subTask->priority] @endphp"
-                                                                                    data-checked="{{ $subTask->finished == 1 ? "1" : "0" }}"
-                                                                                    >
-                                                                                        <i class="icon-circle"></i>
-                                                                                    </button>
-                                                                                </span>
                                                                             </h6>
+                                                                            <div class="heading-elements">
+                                                                                <button type="button" class="btn btn-@php echo $priorityToStyle[$subTask->priority] @endphp check"
+                                                                                        data-style="@php echo $priorityToStyle[$subTask->priority] @endphp"
+                                                                                        data-checked="{{ $subTask->finished == 1 ? "1" : "0" }}"
+                                                                                >
+                                                                                    <i class="icon-circle"></i>
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
                                                                         <div id="collapsible-control-group{{ $subTask->id }}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                                                             <div class="panel-body">
