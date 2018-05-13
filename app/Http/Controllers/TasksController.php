@@ -104,7 +104,7 @@ class TasksController extends Controller
                 {
                     $tasksByProjects[$project->id]['project'] = $project;
                     $tasksByProjects[$project->id]['tasks'][$task->id]['task'] = $task;
-                    //this can probably be done with $task->users, but not it's not working
+                    //this can probably be done with $task->users, but now it's not working
                     foreach ($project->users as $user) {
                         $tasksByProjects[$project->id]['tasks'][$task->id]['usersWithAssigned'][$user->id]['user'] = $user;
                         $isAssigned = false;
