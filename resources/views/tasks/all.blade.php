@@ -235,11 +235,20 @@
             for(let i = 0 ; i < checks.length ; i++)
             {
                 $(checks[i]).hover(function() {
-                    $(this).find('i').attr('class', 'icon-checkmark-circle');
+                    let checked = $(this).data('checked');
+                    if(checked === 0)
+                    {
+                        $(this).find('i').attr('class', 'icon-checkmark-circle');
+                    }
                 }, function() {
-                    $(this).find('i').attr('class', 'icon-circle');
+                    let checked = $(this).data('checked');
+                    if(checked === 0)
+                    {
+                        $(this).find('i').attr('class', 'icon-circle');
+                    }
                 });
 
+                //need to make an ajax request here, to mark subtasks as checked
                 $(checks[i]).click(function() {
                     let style = $(this).data('style');
                     let checked = $(this).data('checked');
@@ -249,6 +258,7 @@
                         $(this).closest('div.panel-heading').removeClass('bg-' + style).addClass('bg-success');
                         $(this).removeClass('btn-' + style).addClass('btn-success');
                         $(this).data('checked', 1);
+                        $(this).find('i').attr('class', 'icon-checkmark-circle');
                     }
                     else {
                         $(this).closest('div.panel-heading').removeClass('bg-success').addClass('bg-' + style);
