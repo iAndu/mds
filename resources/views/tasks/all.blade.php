@@ -2,30 +2,105 @@
 
 @section('content')
     @foreach($tasksByProjects as $tasksByProject)
-        <div class="panel panel-white">
-            <div class="panel-heading">
-                <h6 class="panel-title"> {{ $tasksByProject['project']->name }} <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                <div class="heading-elements">
-                </div>
-            </div>
+        <div class="text-center content-group text-muted content-divider">
+            <span class="pt-10 pb-10">{{ $tasksByProject['project']->name }}</span>
+        </div>
         @foreach (array_chunk($tasksByProject['tasks'], 3) as $collection)
             <div class="row">
                 @foreach ($collection as $taskInfo)
+                    @php
+                        $taskStyle = $priorityToStyle[$taskInfo['task']->priority];
+                        if($taskInfo['task']->finished == 1)
+                            $style = "success";
+                    @endphp
                     <div class="col-md-4">
-                        <div class="panel animation" data-animation="fadeInDownBig">
-                            <div class="panel-heading bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp">
-                                <h6 class="panel-title">{{ $taskInfo['task']->title }}</h6>
-                                <div class="heading-elements">
-                                    <a href="#" class="btn btn-icon bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp legitRipple"
-                                               data-toggle="modal" data-target="#modal_task{{ $taskInfo['task']->id }}">
-                                                <i class="icon-eye"></i>
-                                            </a>
+                        <div class="panel border-left-lg border-left-{{ $taskStyle }} animation"
+                             data-animation="{{ $loop->index == 0 ? 'zoomInLeft' : ($loop->index == 1 ? 'zoomIn' : ($loop->index == 2 ? 'zoomInRight' : 'flip')) }}">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6 class="no-margin-top">
+                                            <a href="#" data-toggle="modal" data-target="#modal_task{{ $taskInfo['task']->id }}">{{ $taskInfo['task']->title }}</a></h6>
+                                        <p class="mb-15">@php
+                                                if(strlen($taskInfo['task']->title) <= 50)
+                                                    echo $taskInfo['task']->title;
+                                                else
+                                                {
+                                                    $descSubstr = substr($taskInfo['task']->title, 0, 50) . "..";
+                                                    echo $descSubstr;
+                                                }
+                                            @endphp</p>
 
+                                        @foreach($taskInfo['usersWithAssigned'] as $userInfo)
+                                            <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-xs" alt=""></a>
+                                            @php
+                                                if($loop->index > 2)
+                                                    break;
+                                            @endphp
+                                        @endforeach
+                                        <a href="#" class="text-default">&nbsp;<i class="icon-plus22"></i></a>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <ul class="list task-details">
+                                            <li>@php
+                                                    $date = new DateTime($taskInfo['task']->created_at);
+                                                    echo $date->format('j F');
+                                                @endphp</li>
+                                            <li class="dropdown">
+                                                Priority: &nbsp;
+                                                    <a href="#" class="label label-{{ $taskStyle }} dropdown-toggle" data-toggle="dropdown">@php echo ucfirst($taskInfo['task']->priority) @endphp <span class="caret"></span></a>
+                                                <ul class="dropdown-menu dropdown-menu-right active">
+                                                    <li><a href="#"><span class="status-mark position-left bg-primary"></span> Low</a></li>
+                                                    <li><a href="#"><span class="status-mark position-left bg-info"></span> Normal</a></li>
+                                                    <li><a href="#"><span class="status-mark position-left bg-warning"></span> High</a></li>
+                                                    <li><a href="#"><span class="status-mark position-left bg-danger"></span> Urgent</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">{{ $tasksByProject['project']->name }}</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="panel-body">
-                                {{ $taskInfo['task']->description }}
+                            <div class="panel-footer panel-footer-condensed"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                                <div class="heading-elements">
+                                    <span class="heading-text">Due: <span class="text-semibold">@php
+                                                $date = new DateTime($taskInfo['task']->deadline);
+                                                if($taskInfo['task']->deadline == null)
+                                                    echo "no deadline set";
+                                                else
+                                                    echo $date->format('Y-m-d  H:i');
+                                            @endphp</span></span>
+
+                                    <ul class="list-inline list-inline-condensed heading-text pull-right">
+                                        <li class="dropdown">
+                                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown">Open <span class="caret"></span></a>
+                                            <ul class="dropdown-menu dropdown-menu-right active">
+                                                <li class="active"><a href="#">Open</a></li>
+                                                <li><a href="#">On hold</a></li>
+                                                <li><a href="#">Resolved</a></li>
+                                                <li><a href="#">Closed</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#">Dublicate</a></li>
+                                                <li><a href="#">Invalid</a></li>
+                                                <li><a href="#">Wontfix</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="dropdown">
+                                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#"><i class="icon-alarm-add"></i> Check in</a></li>
+                                                <li><a href="#"><i class="icon-attachment"></i> Attach screenshot</a></li>
+                                                <li><a href="#"><i class="icon-rotate-ccw2"></i> Reassign</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-pencil7"></i> Edit task</a></li>
+                                                <li><a href="#"><i class="icon-cross2"></i> Remove</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <!-- modal for task -->
@@ -278,7 +353,6 @@
                 @endforeach
             </div>
         @endforeach
-        </div>
     @endforeach
 @endsection
 
@@ -357,6 +431,13 @@
             }
 
             //CKEditor stuff
+            {{-- <div class="heading-elements">
+                                    <a href="#" class="btn btn-icon bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp legitRipple"
+                                               data-toggle="modal" data-target="#modal_task{{ $taskInfo['task']->id }}">
+                                                <i class="icon-eye"></i>
+                                            </a>
+
+                                </div> --}}
             @foreach($tasksByProjects as $tasksByProject)
                 @foreach ($tasksByProject['tasks'] as $taskInfo)
                     CKEDITOR.replace( 'add_comment{{ $taskInfo['task']->id }}', {
@@ -440,6 +521,8 @@
                     });
                 });
             });
+
+            //should handle priority changes here, later
         });
     </script>
 @endpush
