@@ -118,21 +118,32 @@
                                                         <div class="col-lg-12">
                                                             <div class="panel-group panel-group-control content-group-lg">
                                                                 @foreach($taskInfo['subTasks'] as $subTask)
+                                                                    @php
+                                                                        $style = $priorityToStyle[$subTask->priority];
+                                                                        $circleIcon = "icon-circle";
+                                                                        $popupTitle = "Mark as checked";
+                                                                        if($subTask->finished == 1)
+                                                                        {
+                                                                            $style = "success";
+                                                                            $circleIcon = "icon-checkmark-circle";
+                                                                            $popupTitle = "Mark as unchecked";
+                                                                        }
+                                                                    @endphp
                                                                     <div class="panel">
-                                                                        <div class="panel-heading bg-@php echo $priorityToStyle[$subTask->priority] @endphp">
+                                                                        <div class="panel-heading bg-{{ $style }}">
                                                                             <h6 class="panel-title">
                                                                                 <a data-toggle="collapse" href="#collapsible-control-group{{ $subTask->id }}"
                                                                                    aria-expanded="false" class="collapsed">{{ $subTask->title }}</a>
                                                                             </h6>
                                                                             <div class="heading-elements">
-                                                                                <button type="button" class="btn btn-@php echo $priorityToStyle[$subTask->priority] @endphp check"
-                                                                                        data-style="@php echo $priorityToStyle[$subTask->priority] @endphp"
+                                                                                <button type="button" class="btn btn-{{ $style }} check"
+                                                                                        data-initial-style="{{ $priorityToStyle[$subTask->priority] }}"
                                                                                         data-checked="{{ $subTask->finished == 1 ? "1" : "0" }}"
                                                                                         data-popup="tooltip"
                                                                                         data-placement="top"
-                                                                                        title="Mark as checked"
+                                                                                        title="{{ $popupTitle }}"
                                                                                 >
-                                                                                    <i class="icon-circle"></i>
+                                                                                    <i class="{{ $circleIcon }}"></i>
                                                                                 </button>
                                                                             </div>
                                                                         </div>
@@ -224,7 +235,7 @@
                                                                                 </span>
                                                                             </div>
 
-                                                                            <p>{{ $comment->content }}</p>
+                                                                            <p>{!! $comment->content /* parse the string as html */ !!}</p>
                                                                             <!-- upvote, downvote, reply, edit
                                                                             <ul class="list-inline list-inline-separate text-size-small">
                                                                                 <li>114 <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li>
@@ -327,7 +338,7 @@
 
                 //need to make an ajax request here, to mark subtasks as checked
                 $(checks[i]).click(function() {
-                    let style = $(this).data('style');
+                    let style = $(this).data('initial-style');
                     let checked = $(this).data('checked');
 
                     if(checked === 0)
@@ -371,56 +382,62 @@
             //comments
             $('.btnAddComment').each(function(i) {
                 $(this).on('click', function(e) {
-                    //$('#add_comment' + $(this).data('id')).text());
                     let instance_name = 'add_comment' + $(this).data('id');
-                    let data = CKEDITOR.instances[instance_name].getData();
-                    /* data for ajax request for comment :
-                    * id of the task is $(this).data('id') ( the id of the task is attached to the button data )
-                    * user_id is the id of the user currently using the application, should be easy to get that
-                    * content is the 'data' variable from above
-                    */
+                    let _data = CKEDITOR.instances[instance_name].getData();
 
-                    /*
+                    let route = "{{ route('comments.store') }}";
+                    let $this = $(this);
+                    let taskId = $this.data('id');
+                    let userId = @php echo Auth::user()->id @endphp;
+
                     $.ajax({
-                        url: '/logout',
+                        url: route,
                         method: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success: function () {
-                            window.location = '/';
+                        data: {
+                            task_id: taskId,
+                            user_id: userId,
+                            content: _data
+                        },
+                        success: function (resp) {
+                            if(resp.status === "success")
+                            {
+                                let elToAdd = '<li class="media">' +
+                                    '<div class="media-left">' +
+                                    '    <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></a>' +
+                                    '</div>' +
+                                    '' +
+                                    '<div class="media-body">' +
+                                    '    <div class="media-heading">' +
+                                    '        <a href="#" class="text-semibold">{{ Auth::user()->name }}</a>' +
+                                    '        <span class="media-annotation dotted">' +
+                                    '        @php
+                                        echo date('Y-m-d  H:i:s');
+                                    @endphp' +
+                                    '        </span>' +
+                                    '    </div>' +
+                                    '' +
+                                    '' + _data +
+                                    '<!-- upvote, downvote, reply, edit' +
+                                    '<ul class="list-inline list-inline-separate text-size-small">' +
+                                    '    <li>114 <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li>' +
+                                    '    <li><a href="#">Reply</a></li>' +
+                                    '    <li><a href="#">Edit</a></li>' +
+                                    '</ul>' +
+                                    '-->' +
+                                    '</div>' +
+                                    '</li>';
+
+                                $(elToAdd).insertBefore($('#dummyInsertPoint' + taskId));
+                            }
+                            else
+                            {
+                                console.log("Error : " + resp.message);
+                            }
                         }
                     });
-                    */
-                    //after request is done, add the comment in the html
-                    //should enclose this in a ajaxComplete event ?
-                    let elToAdd = '<li class="media">' +
-                        '<div class="media-left">' +
-                        '    <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></a>' +
-                        '</div>' +
-                        '' +
-                        '<div class="media-body">' +
-                        '    <div class="media-heading">' +
-                        '        <a href="#" class="text-semibold">{{ Auth::user()->name }}</a>' +
-                        '        <span class="media-annotation dotted">' +
-                        '        @php
-                                    echo date('Y-m-d  H:i:s');
-                                @endphp' +
-                        '        </span>' +
-                        '    </div>' +
-                        '' +
-                        '' + data +
-                        '<!-- upvote, downvote, reply, edit' +
-                        '<ul class="list-inline list-inline-separate text-size-small">' +
-                        '    <li>114 <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li>' +
-                        '    <li><a href="#">Reply</a></li>' +
-                        '    <li><a href="#">Edit</a></li>' +
-                        '</ul>' +
-                        '-->' +
-                        '</div>' +
-                        '</li>';
-
-                    $(elToAdd).insertBefore($('#dummyInsertPoint' + $(this).data('id')));
                 });
             });
         });
