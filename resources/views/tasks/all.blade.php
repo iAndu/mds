@@ -128,6 +128,9 @@
                                                                                 <button type="button" class="btn btn-@php echo $priorityToStyle[$subTask->priority] @endphp check"
                                                                                         data-style="@php echo $priorityToStyle[$subTask->priority] @endphp"
                                                                                         data-checked="{{ $subTask->finished == 1 ? "1" : "0" }}"
+                                                                                        data-popup="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="Mark as checked"
                                                                                 >
                                                                                     <i class="icon-circle"></i>
                                                                                 </button>
@@ -290,6 +293,7 @@
     <script type="text/javascript" src="{{ URL::asset('limitless/ckeditor/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/core/libraries/jquery_ui/widgets.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/components_popups.js') }}"></script>
 
     <script type="text/javascript">
         $(window).load(function(){
@@ -330,13 +334,13 @@
                     {
                         $(this).closest('div.panel-heading').removeClass('bg-' + style).addClass('bg-success');
                         $(this).removeClass('btn-' + style).addClass('btn-success');
-                        $(this).data('checked', 1);
+                        $(this).data('checked', 1).attr('title', 'Mark as unchecked');
                         $(this).find('i').attr('class', 'icon-checkmark-circle');
                     }
                     else {
                         $(this).closest('div.panel-heading').removeClass('bg-success').addClass('bg-' + style);
                         $(this).removeClass('btn-success').addClass('btn-' + style);
-                        $(this).data('checked', 0);
+                        $(this).data('checked', 0).attr('title', 'Mark as checked');
                     }
                 });
             }
