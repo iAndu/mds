@@ -142,11 +142,14 @@ class TasksController extends Controller
         $task->users()->detach();
         $task->save();
 
-        foreach($elements as $element)
+        if($elements)
         {
-            $user_id = substr($element, strlen('assignedUser'));
-            $task->users()->attach($user_id);
-            //$task->save();
+            foreach($elements as $element)
+            {
+                $user_id = substr($element, strlen('assignedUser'));
+                $task->users()->attach($user_id);
+                //$task->save();
+            }
         }
 
     }
