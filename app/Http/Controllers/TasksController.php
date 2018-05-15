@@ -134,6 +134,23 @@ class TasksController extends Controller
         return view('tasks.all', compact('tasksByProjects', 'priorityToStyle'));
     }
 
+    public function assign(Request $request)
+    {
+        $elements = $request->input('elements');
+        $task = Task::find($request->input("task"));
+
+        $task->users()->detach();
+        $task->save();
+
+        foreach($elements as $element)
+        {
+            $user_id = substr($element, strlen('assignedUser'));
+            $task->users()->attach($user_id);
+            //$task->save();
+        }
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *

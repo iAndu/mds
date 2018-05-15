@@ -246,17 +246,16 @@
 
                                                 <div class="media-body">
                                                     <div class="col-lg-12">
-                                                        <form method="post" action="{{ route('projects.store') }}" id="project-create"
-                                                              enctype="multipart/form-data" class="form-horizontal">
+
                                                             @csrf
                                                             @foreach($taskInfo['usersWithAssigned'] as $userInfo)
                                                                 <div class="checkbox">
                                                                     <label for="{{ $userInfo['user']->name }}"> {{ $userInfo['user']->name }} </label>
                                                                     <input
-                                                                            id="{{ $userInfo['user']->name }}"
+                                                                            id="{{ 'assignedUser' . $userInfo['user']->id }}"
                                                                             name="assignedUsers{{ $taskInfo['task']->id }}"
                                                                             type="checkbox"
-                                                                            class="styled"
+                                                                            class="styled userassign{{ $taskInfo['task']->id }}"
                                                                             @if($userInfo['isAssigned'] == true)
                                                                                 checked
                                                                             @endif
@@ -264,9 +263,9 @@
                                                                 </div>
                                                             @endforeach
                                                             <div class="text-right">
-                                                                <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                                                                <button type="submit" class="btn btn-primary" onClick = "assignUsers( {{ $taskInfo['task']->id }} )">Submit<i class="icon-arrow-right14 position-right" ></i></button>
                                                             </div>
-                                                        </form>
+                                                        
                                                     </div>
                                                 </div>
 
@@ -392,6 +391,7 @@
                     $(this).removeClass("animated " + animationData);
                 });
             }
+
 
             let checks = $('.check');
             for(let i = 0 ; i < checks.length ; i++)
@@ -524,5 +524,28 @@
 
             //should handle priority changes here, later
         });
+
+        function assignUsers(task)
+        {
+            var elements = $('input.userassign' + task).filter(':checked').map(function () {
+                return this.id;
+            }).get();
+            $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+            data:{elements: elements, task:task},
+            url:'/tasks/assign',
+            method:'POST',
+            //dataType : "text/csv",
+            success:function(data){
+                alert('Sucessfully assigned!');
+                document.location.reload();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            } 
+                });
+        }
     </script>
 @endpush
