@@ -50,11 +50,11 @@
                                             <li class="dropdown">
                                                 Priority: &nbsp;
                                                     <a href="#" class="label label-{{ $taskStyle }} dropdown-toggle" data-toggle="dropdown">@php echo ucfirst($taskInfo['task']->priority) @endphp <span class="caret"></span></a>
-                                                <ul class="dropdown-menu dropdown-menu-right active">
-                                                    <li  onClick = "Change({{ $taskInfo['task']->id }}, 'low')"><a href="#"><span class="status-mark position-left bg-primary"></span> Low</a></li>
-                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'normal')"><a href="#"><span class="status-mark position-left bg-info"></span> Normal</a></li>
-                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'high')"><a href="#"><span class="status-mark position-left bg-warning"></span> High</a></li>
-                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'urgent')"><a href="#"><span class="status-mark position-left bg-danger"></span> Urgent</a></li>
+                                                <ul class="dropdown-menu dropdown-menu-right active" data-priority="{{ $taskInfo['task']->priority }}">
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'low')" class="@if($taskInfo['task']->priority == "low") active @endif lowPriority"><a href="#"><span class="status-mark position-left bg-primary"></span> Low</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'normal')" class="@if($taskInfo['task']->priority == "normal") active @endif normalPriority"><a href="#"><span class="status-mark position-left bg-info"></span> Normal</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'high')" class="@if($taskInfo['task']->priority == "high") active @endif highPriority"><a href="#"><span class="status-mark position-left bg-warning"></span> High</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'urgent')" class="@if($taskInfo['task']->priority == "urgent") active @endif urgentPriority"><a href="#"><span class="status-mark position-left bg-danger"></span> Urgent</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">{{ $tasksByProject['project']->name }}</a></li>
@@ -172,7 +172,7 @@
                                                 <div class="media-left media-middle">
                                                 </div>
 
-                                                <div class="media-body">
+                                                <div class="media-body priority">
                                                     <div class="alert bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp alert-styled-left">
                                                         @php echo ucfirst($taskInfo['task']->priority) @endphp
                                                     </div>
@@ -548,6 +548,10 @@
                 });
         }
 
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         function Change(task, priority)
         {
             $.ajax({
@@ -559,7 +563,42 @@
             method:'POST',
             //dataType : "text/csv",
             success:function(data){
-                document.location.reload();
+                let prioToStyle = {
+                    'low': 'primary',
+                    'normal': 'info',
+                    'high': 'warning',
+                    'urgent': 'danger'
+                };
+                //find parent and previous priority
+                let parent = $('a[data-target="#modal_task' + task + '"]').
+                parents('div.panel').
+                find('ul.dropdown-menu');
+                let previousPriority = $(parent).data('priority');
+
+                //update gui and previous priority
+                $(parent).find('li.' + previousPriority + 'Priority').removeClass('active');
+                $(parent).data('priority', priority);
+                $(parent).find('li.' + priority + 'Priority').addClass('active');
+
+                let parentPanel = $('a[data-target="#modal_task' + task + '"]').parents('div.panel');
+                $(parentPanel).removeClass('border-left-' + prioToStyle[previousPriority]);
+                $(parentPanel).addClass('border-left-' + prioToStyle[priority]);
+
+                let a = $(parent).parent('li.dropdown').children('a.label').first();
+                $(a).removeClass('label-' + prioToStyle[previousPriority]);
+                $(a).addClass('label-' + prioToStyle[priority]);
+                $(a).html(capitalizeFirstLetter(priority) + '<span class="caret"></span>');
+
+                //update in the modal
+                //find respective elements
+                let panelBody = $('div#modal_task' + task).find('div.priority');
+                let alertElement = $(panelBody).find('div.alert');
+
+                //update bg and text content
+                $(alertElement).removeClass('bg-' + prioToStyle[previousPriority]);
+                $(alertElement).addClass('bg-' + prioToStyle[priority]);
+                $(alertElement).html(capitalizeFirstLetter(priority));
+
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) { 
                 alert("Status: " + textStatus); alert("Error: " + errorThrown); 
