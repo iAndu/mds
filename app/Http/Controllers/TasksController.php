@@ -64,7 +64,7 @@ class TasksController extends Controller
      */
     public function show($task)
     {
-        //
+        return $task;
     }
 
     /**
@@ -99,5 +99,15 @@ class TasksController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function assign(Request $request, Task $task)
+    {
+        $task->users()->attach($request->users);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Project created successfuly.'
+        ]);
     }
 }

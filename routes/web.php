@@ -23,5 +23,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::resource('projects', 'ProjectsController');
     Route::resource('groups', 'GroupsController');
     Route::resource('tasks', 'TasksController');
+    Route::post('tasks/assign/{task}', [
+        'as' => 'tasks.assign',
+        'uses' => 'TasksController@assign'
+    ]);
     
 });
