@@ -378,6 +378,7 @@
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/core/libraries/jquery_ui/widgets.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/components_popups.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 
     <script type="text/javascript">
         $(window).load(function(){
@@ -521,8 +522,6 @@
                     });
                 });
             });
-
-            //should handle priority changes here, later
         });
 
         function assignUsers(task)
@@ -539,8 +538,10 @@
             method:'POST',
             //dataType : "text/csv",
             success:function(data){
-                alert('Sucessfully assigned!');
-                document.location.reload();
+                new PNotify({
+                    text: 'Task successfully asigned to users!',
+                    addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
+                });
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) { 
                 alert("Status: " + textStatus); alert("Error: " + errorThrown); 
