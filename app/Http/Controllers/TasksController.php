@@ -62,7 +62,7 @@ class TasksController extends Controller
      * @param  int  $task
      * @return \Illuminate\Http\Response
      */
-    public function show($task)
+    public function show()
     {
         return $task;
     }
@@ -88,6 +88,50 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function all()
+    {
+        $projects = Auth::user()->projects()->get();
+        $tasksByProjects = [];
+
+        foreach($projects as $project)
+        {
+            foreach($project->tasks as $task)
+            {
+                //only main tasks have task_id null
+                if($task->task_id == null)
+                {
+                    $tasksByProjects[$project->id]['project'] = $project;
+                    $tasksByProjects[$project->id]['tasks'][$task->id]['task'] = $task;
+                    //this can probably be done with $task->users, but now it's not working
+                    foreach ($project->users as $user) {
+                        $tasksByProjects[$project->id]['tasks'][$task->id]['usersWithAssigned'][$user->id]['user'] = $user;
+                        $isAssigned = false;
+                        foreach ($user->tasks as $taskOfUser) {
+                            if ($taskOfUser->id == $task->id) {
+                                $isAssigned = true;
+                                break;
+                            }
+                        }
+                        $tasksByProjects[$project->id]['tasks'][$task->id]['usersWithAssigned'][$user->id]['isAssigned'] = $isAssigned;
+                    }
+
+                    foreach ($task->subTasks as $subTask) {
+                        $tasksByProjects[$project->id]['tasks'][$task->id]['subTasks'][$subTask->id] = $subTask;
+                    }
+                }
+            }
+        }
+
+        //utilities
+        $priorityToStyle['low'] = 'primary';
+        $priorityToStyle['normal'] = 'info';
+        $priorityToStyle['high'] = 'warning';
+        $priorityToStyle['urgent'] = 'danger';
+
+        //dd($tasksByProjects);
+        return view('tasks.all', compact('tasksByProjects', 'priorityToStyle'));
     }
 
     /**

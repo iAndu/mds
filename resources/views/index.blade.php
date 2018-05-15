@@ -25,5 +25,5 @@
     @endforeach
 </div>
 @endforeach--}}
-
+</div>
 @endsection

@@ -19,6 +19,7 @@
     <!-- /global stylesheets -->
 
     @stack('css')
+
 </head>
 
 <body class="navbar-bottom">
