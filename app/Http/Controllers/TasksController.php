@@ -151,6 +151,13 @@ class TasksController extends Controller
 
     }
 
+    public function changePriority(Request $request)
+    {
+        $task = Task::find($request->input("task"));
+        $task->priority = $request->input("priority");
+        $task->save();
+    }
+
     /**
      * Remove the specified resource from storage.
      *

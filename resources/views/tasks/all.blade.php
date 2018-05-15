@@ -51,10 +51,10 @@
                                                 Priority: &nbsp;
                                                     <a href="#" class="label label-{{ $taskStyle }} dropdown-toggle" data-toggle="dropdown">@php echo ucfirst($taskInfo['task']->priority) @endphp <span class="caret"></span></a>
                                                 <ul class="dropdown-menu dropdown-menu-right active">
-                                                    <li><a href="#"><span class="status-mark position-left bg-primary"></span> Low</a></li>
-                                                    <li><a href="#"><span class="status-mark position-left bg-info"></span> Normal</a></li>
-                                                    <li><a href="#"><span class="status-mark position-left bg-warning"></span> High</a></li>
-                                                    <li><a href="#"><span class="status-mark position-left bg-danger"></span> Urgent</a></li>
+                                                    <li  onClick = "Change({{ $taskInfo['task']->id }}, 'low')"><a href="#"><span class="status-mark position-left bg-primary"></span> Low</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'normal')"><a href="#"><span class="status-mark position-left bg-info"></span> Normal</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'high')"><a href="#"><span class="status-mark position-left bg-warning"></span> High</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'urgent')"><a href="#"><span class="status-mark position-left bg-danger"></span> Urgent</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">{{ $tasksByProject['project']->name }}</a></li>
@@ -540,6 +540,25 @@
             //dataType : "text/csv",
             success:function(data){
                 alert('Sucessfully assigned!');
+                document.location.reload();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            } 
+                });
+        }
+
+        function Change(task, priority)
+        {
+            $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+            data:{task:task, priority:priority},
+            url:'/tasks/changePriority',
+            method:'POST',
+            //dataType : "text/csv",
+            success:function(data){
                 document.location.reload();
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) { 
