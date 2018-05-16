@@ -214,6 +214,7 @@
                                                                                 <button type="button" class="btn btn-{{ $style }} check"
                                                                                         data-initial-style="{{ $priorityToStyle[$subTask->priority] }}"
                                                                                         data-checked="{{ $subTask->finished == 1 ? "1" : "0" }}"
+                                                                                        data-task-id="{{ $subTask->id }}"
                                                                                         data-popup="tooltip"
                                                                                         data-placement="top"
                                                                                         title="{{ $popupTitle }}"
@@ -415,19 +416,35 @@
                 $(checks[i]).click(function() {
                     let style = $(this).data('initial-style');
                     let checked = $(this).data('checked');
-
-                    if(checked === 0)
-                    {
-                        $(this).closest('div.panel-heading').removeClass('bg-' + style).addClass('bg-success');
-                        $(this).removeClass('btn-' + style).addClass('btn-success');
-                        $(this).data('checked', 1).attr('title', 'Mark as unchecked');
-                        $(this).find('i').attr('class', 'icon-checkmark-circle');
-                    }
-                    else {
-                        $(this).closest('div.panel-heading').removeClass('bg-success').addClass('bg-' + style);
-                        $(this).removeClass('btn-success').addClass('btn-' + style);
-                        $(this).data('checked', 0).attr('title', 'Mark as checked');
-                    }
+                    let task = $(this).data('task-id');
+                    let $this = $(this); //save it because the $(this) will change in the ajax success
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:{task:task},
+                        url:'/tasks/toggleSubtask',
+                        method:'POST',
+                        //dataType : "text/csv",
+                        success:function(data){
+                            console.log($this);
+                            if(checked === 0)
+                            {
+                                $this.closest('div.panel-heading').removeClass('bg-' + style).addClass('bg-success');
+                                $this.removeClass('btn-' + style).addClass('btn-success');
+                                $this.data('checked', 1).attr('title', 'Mark as unchecked');
+                                $this.find('i').attr('class', 'icon-checkmark-circle');
+                            }
+                            else {
+                                $this.closest('div.panel-heading').removeClass('bg-success').addClass('bg-' + style);
+                                $this.removeClass('btn-success').addClass('btn-' + style);
+                                $this.data('checked', 0).attr('title', 'Mark as checked');
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+                    });
                 });
             }
 
@@ -520,6 +537,14 @@
                             }
                         }
                     });
+                });
+            });
+
+            //prevent default for change priority a's
+            $('li.dropdown > ul.dropdown-menu li').each(function(i) {
+                //nu a, li-uri
+                $(this).on('click', function(event) {
+                    event.preventDefault();
                 });
             });
         });
