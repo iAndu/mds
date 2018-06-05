@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                        <button type="submit" class="btn btn-primary" name="submitBtn">Submit<i class="icon-arrow-right14 position-right"></i></button>
                     </div>
                 </div>
             </div>
