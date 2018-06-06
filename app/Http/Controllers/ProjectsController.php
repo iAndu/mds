@@ -70,7 +70,7 @@ class ProjectsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Project created successfuly.'
+            'message' => 'Project created successfully.'
         ]);
     }
 
