@@ -564,7 +564,7 @@
             //dataType : "text/csv",
             success:function(data){
                 new PNotify({
-                    text: 'Task successfully asigned to users!',
+                    text: 'Task successfully assigned to users!',
                     addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
                 });
             },
