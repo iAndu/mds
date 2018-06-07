@@ -161,6 +161,7 @@
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/picker_date.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 
     <script type="text/javascript">
         $(window).load(function(){
@@ -186,6 +187,27 @@
             $('#taskCreateSubmit').on('click', function(e) {
                 $('.hidden').remove();
                 $('#task-create').submit();
+            });
+
+            // jQuery, bind an event handler or use some other way to trigger ajax call.
+            $('form').submit(function( event ) {
+                event.preventDefault();
+                let URL = $(this).attr('action');
+                $.ajax({
+                    url: URL,
+                    type: 'post',
+                    data: $('form').serialize(), // Remember that you need to have your csrf token included
+                    dataType: 'json',
+                    success:function(data){
+                        new PNotify({
+                            text: 'Task successfully created!',
+                            addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
+                        });
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                    }
+                });
             });
         });
     </script>
