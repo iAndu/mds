@@ -50,11 +50,11 @@
                                             <li class="dropdown">
                                                 Priority: &nbsp;
                                                     <a href="#" class="label label-{{ $taskStyle }} dropdown-toggle" data-toggle="dropdown">@php echo ucfirst($taskInfo['task']->priority) @endphp <span class="caret"></span></a>
-                                                <ul class="dropdown-menu dropdown-menu-right active">
-                                                    <li><a href="#"><span class="status-mark position-left bg-primary"></span> Low</a></li>
-                                                    <li><a href="#"><span class="status-mark position-left bg-info"></span> Normal</a></li>
-                                                    <li><a href="#"><span class="status-mark position-left bg-warning"></span> High</a></li>
-                                                    <li><a href="#"><span class="status-mark position-left bg-danger"></span> Urgent</a></li>
+                                                <ul class="dropdown-menu dropdown-menu-right active" data-priority="{{ $taskInfo['task']->priority }}">
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'low')" class="@if($taskInfo['task']->priority == "low") active @endif lowPriority"><a href="#"><span class="status-mark position-left bg-primary"></span> Low</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'normal')" class="@if($taskInfo['task']->priority == "normal") active @endif normalPriority"><a href="#"><span class="status-mark position-left bg-info"></span> Normal</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'high')" class="@if($taskInfo['task']->priority == "high") active @endif highPriority"><a href="#"><span class="status-mark position-left bg-warning"></span> High</a></li>
+                                                    <li onClick = "Change({{ $taskInfo['task']->id }}, 'urgent')" class="@if($taskInfo['task']->priority == "urgent") active @endif urgentPriority"><a href="#"><span class="status-mark position-left bg-danger"></span> Urgent</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">{{ $tasksByProject['project']->name }}</a></li>
@@ -172,7 +172,7 @@
                                                 <div class="media-left media-middle">
                                                 </div>
 
-                                                <div class="media-body">
+                                                <div class="media-body priority">
                                                     <div class="alert bg-@php echo $priorityToStyle[$taskInfo['task']->priority] @endphp alert-styled-left">
                                                         @php echo ucfirst($taskInfo['task']->priority) @endphp
                                                     </div>
@@ -214,6 +214,7 @@
                                                                                 <button type="button" class="btn btn-{{ $style }} check"
                                                                                         data-initial-style="{{ $priorityToStyle[$subTask->priority] }}"
                                                                                         data-checked="{{ $subTask->finished == 1 ? "1" : "0" }}"
+                                                                                        data-task-id="{{ $subTask->id }}"
                                                                                         data-popup="tooltip"
                                                                                         data-placement="top"
                                                                                         title="{{ $popupTitle }}"
@@ -246,17 +247,16 @@
 
                                                 <div class="media-body">
                                                     <div class="col-lg-12">
-                                                        <form method="post" action="{{ route('projects.store') }}" id="project-create"
-                                                              enctype="multipart/form-data" class="form-horizontal">
+
                                                             @csrf
                                                             @foreach($taskInfo['usersWithAssigned'] as $userInfo)
                                                                 <div class="checkbox">
                                                                     <label for="{{ $userInfo['user']->name }}"> {{ $userInfo['user']->name }} </label>
                                                                     <input
-                                                                            id="{{ $userInfo['user']->name }}"
+                                                                            id="{{ 'assignedUser' . $userInfo['user']->id }}"
                                                                             name="assignedUsers{{ $taskInfo['task']->id }}"
                                                                             type="checkbox"
-                                                                            class="styled"
+                                                                            class="styled userassign{{ $taskInfo['task']->id }}"
                                                                             @if($userInfo['isAssigned'] == true)
                                                                                 checked
                                                                             @endif
@@ -264,9 +264,9 @@
                                                                 </div>
                                                             @endforeach
                                                             <div class="text-right">
-                                                                <button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                                                                <button type="submit" class="btn btn-primary" onClick = "assignUsers( {{ $taskInfo['task']->id }} )">Submit<i class="icon-arrow-right14 position-right" ></i></button>
                                                             </div>
-                                                        </form>
+                                                        
                                                     </div>
                                                 </div>
 
@@ -379,6 +379,7 @@
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/core/libraries/jquery_ui/widgets.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/components_popups.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 
     <script type="text/javascript">
         $(window).load(function(){
@@ -392,6 +393,7 @@
                     $(this).removeClass("animated " + animationData);
                 });
             }
+
 
             let checks = $('.check');
             for(let i = 0 ; i < checks.length ; i++)
@@ -414,19 +416,35 @@
                 $(checks[i]).click(function() {
                     let style = $(this).data('initial-style');
                     let checked = $(this).data('checked');
-
-                    if(checked === 0)
-                    {
-                        $(this).closest('div.panel-heading').removeClass('bg-' + style).addClass('bg-success');
-                        $(this).removeClass('btn-' + style).addClass('btn-success');
-                        $(this).data('checked', 1).attr('title', 'Mark as unchecked');
-                        $(this).find('i').attr('class', 'icon-checkmark-circle');
-                    }
-                    else {
-                        $(this).closest('div.panel-heading').removeClass('bg-success').addClass('bg-' + style);
-                        $(this).removeClass('btn-success').addClass('btn-' + style);
-                        $(this).data('checked', 0).attr('title', 'Mark as checked');
-                    }
+                    let task = $(this).data('task-id');
+                    let $this = $(this); //save it because the $(this) will change in the ajax success
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:{task:task},
+                        url:'/tasks/toggleSubtask',
+                        method:'POST',
+                        //dataType : "text/csv",
+                        success:function(data){
+                            console.log($this);
+                            if(checked === 0)
+                            {
+                                $this.closest('div.panel-heading').removeClass('bg-' + style).addClass('bg-success');
+                                $this.removeClass('btn-' + style).addClass('btn-success');
+                                $this.data('checked', 1).attr('title', 'Mark as unchecked');
+                                $this.find('i').attr('class', 'icon-checkmark-circle');
+                            }
+                            else {
+                                $this.closest('div.panel-heading').removeClass('bg-success').addClass('bg-' + style);
+                                $this.removeClass('btn-success').addClass('btn-' + style);
+                                $this.data('checked', 0).attr('title', 'Mark as checked');
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+                    });
                 });
             }
 
@@ -522,7 +540,96 @@
                 });
             });
 
-            //should handle priority changes here, later
+            //prevent default for change priority a's
+            $('li.dropdown > ul.dropdown-menu li').each(function(i) {
+                //nu a, li-uri
+                $(this).on('click', function(event) {
+                    event.preventDefault();
+                });
+            });
         });
+
+        function assignUsers(task)
+        {
+            var elements = $('input.userassign' + task).filter(':checked').map(function () {
+                return this.id;
+            }).get();
+            $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+            data:{elements: elements, task:task},
+            url:'/tasks/assign',
+            method:'POST',
+            //dataType : "text/csv",
+            success:function(data){
+                new PNotify({
+                    text: 'Task successfully asigned to users!',
+                    addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            } 
+                });
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function Change(task, priority)
+        {
+            $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+            data:{task:task, priority:priority},
+            url:'/tasks/changePriority',
+            method:'POST',
+            //dataType : "text/csv",
+            success:function(data){
+                let prioToStyle = {
+                    'low': 'primary',
+                    'normal': 'info',
+                    'high': 'warning',
+                    'urgent': 'danger'
+                };
+                //find parent and previous priority
+                let parent = $('a[data-target="#modal_task' + task + '"]').
+                parents('div.panel').
+                find('ul.dropdown-menu');
+                let previousPriority = $(parent).data('priority');
+
+                //update gui and previous priority
+                $(parent).find('li.' + previousPriority + 'Priority').removeClass('active');
+                $(parent).data('priority', priority);
+                $(parent).find('li.' + priority + 'Priority').addClass('active');
+
+                let parentPanel = $('a[data-target="#modal_task' + task + '"]').parents('div.panel');
+                $(parentPanel).removeClass('border-left-' + prioToStyle[previousPriority]);
+                $(parentPanel).addClass('border-left-' + prioToStyle[priority]);
+
+                let a = $(parent).parent('li.dropdown').children('a.label').first();
+                $(a).removeClass('label-' + prioToStyle[previousPriority]);
+                $(a).addClass('label-' + prioToStyle[priority]);
+                $(a).html(capitalizeFirstLetter(priority) + '<span class="caret"></span>');
+
+                //update in the modal
+                //find respective elements
+                let panelBody = $('div#modal_task' + task).find('div.priority');
+                let alertElement = $(panelBody).find('div.alert');
+
+                //update bg and text content
+                $(alertElement).removeClass('bg-' + prioToStyle[previousPriority]);
+                $(alertElement).addClass('bg-' + prioToStyle[priority]);
+                $(alertElement).html(capitalizeFirstLetter(priority));
+
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            } 
+                });
+        }
     </script>
 @endpush

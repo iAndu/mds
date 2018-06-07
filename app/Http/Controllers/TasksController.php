@@ -56,6 +56,14 @@ class TasksController extends Controller
         ]);
     }
 
+    //check/uncheck a subtask
+    public function toggleSubtask(Request $request)
+    {
+        $task = Task::find($request->input("task"));
+        $task->finished = 1 - $task->finished;
+        $task->save();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -132,6 +140,33 @@ class TasksController extends Controller
 
         //dd($tasksByProjects);
         return view('tasks.all', compact('tasksByProjects', 'priorityToStyle'));
+    }
+
+    public function assign(Request $request)
+    {
+        $elements = $request->input('elements');
+        $task = Task::find($request->input("task"));
+
+        $task->users()->detach();
+        $task->save();
+
+        if($elements)
+        {
+            foreach($elements as $element)
+            {
+                $user_id = substr($element, strlen('assignedUser'));
+                $task->users()->attach($user_id);
+                //$task->save();
+            }
+        }
+
+    }
+
+    public function changePriority(Request $request)
+    {
+        $task = Task::find($request->input("task"));
+        $task->priority = $request->input("priority");
+        $task->save();
     }
 
     /**
