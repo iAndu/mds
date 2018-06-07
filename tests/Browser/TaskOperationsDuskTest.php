@@ -51,4 +51,78 @@ class TaskOperationsDuskTest extends DuskTestCase
         //delete
         Task::where('title', '_TEST_TASK_TITLE_')->delete();
     }
+
+    public function testChangePriority()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = User::find($this->userId);
+            $projects = $user->projects;
+            $tasks = $user->tasks;
+
+            foreach($projects as $project)
+            {
+                $browser->loginAs($user)
+                        ->visit('/tasks/all')
+                        ->assertSee($project->name);
+            }
+
+            $taskIds = [];
+            foreach($tasks as $task)
+            {
+                $browser->loginAs($user)
+                        ->visit('/tasks/all'); //mine
+                        //->assertSee($task->title); //will uncomment once /tasks/mine is done
+
+                array_push($taskIds, $task->id);
+            }
+
+            $idTest = $taskIds[array_rand($taskIds)];
+            $priorities = ['low', 'normal', 'high', 'urgent'];
+            $chosenPriority = $priorities[array_rand($priorities)];
+
+            $task = Task::find($idTest);
+            $lastPriority = $task->priority;
+            $task->priority = $chosenPriority;
+            $task->save();
+
+            $oldTask = Task::find($idTest);
+            $this->assertTrue($oldTask->priority == $chosenPriority);
+            $oldTask->priority = $lastPriority;
+            $oldTask->save();
+
+            $finalTaskCheck = Task::find($idTest);
+            $this->assertTrue($finalTaskCheck->priority == $lastPriority);
+
+            //if we got here, everything is good
+        });
+    }
+
+    public function testAssignUsers()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = User::find($this->userId);
+            $projects = $user->projects;
+            $tasks = $user->tasks;
+
+            foreach($projects as $project)
+            {
+                $browser->loginAs($user)
+                        ->visit('/tasks/all')
+                        ->assertSee($project->name);
+            }
+
+            $taskIds = [];
+            foreach($tasks as $task)
+            {
+                $browser->loginAs($user)
+                        ->visit('/tasks/all'); //mine
+                //->assertSee($task->title); //will uncomment once /tasks/mine is done
+
+                array_push($taskIds, $task->id);
+            }
+
+            $idTest = $taskIds[array_rand($taskIds)];
+            //if we got here, everything is good
+        });
+    }
 }
