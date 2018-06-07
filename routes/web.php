@@ -23,7 +23,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::resource('{group_id}/projects', 'ProjectsController');
     Route::post('{group_id}/projects/assign', ['as'=>'projects.assign', 'uses'=>'ProjectsController@assign']);
-    Route::resource('{group_id}/groups', 'GroupsController');    
+    Route::get('{group_id}/groups/change', ['as' => 'groups.change', 'uses' => 'GroupsController@change']);
+    Route::post('{group_id}/groups/changed', ['as' => 'groups.changed', 'uses' => 'GroupsController@changed']);
+    Route::resource('{group_id}/groups', 'GroupsController');
     Route::get('{group_id}/tasks/all', ['as'=>'tasks.all', 'uses'=>'TasksController@all']);
     Route::post('{group_id}/tasks/assign', ['as'=>'tasks.assign', 'uses'=>'TasksController@assign']);
     Route::post('{group_id}/tasks/changePriority', ['as'=>'tasks.changePriority', 'uses'=>'TasksController@changePriority']);

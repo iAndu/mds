@@ -39,6 +39,7 @@
                         <ul>
                             {{-- <li><a href="{{ route('groups.index', $group_id) }}" id="layout1">Group list</a></li> --}}
                             <li><a href="{{ route('groups.create', $group_id) }}" id="layout1">Group create</a></li>
+                            <li><a href="{{ route('groups.change', $group_id) }}" id="layout1">Group change</a></li>
                         </ul>
                     </li>
 

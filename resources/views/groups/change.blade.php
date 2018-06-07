@@ -2,14 +2,19 @@
 
 @section('content')
 
+@php
+    $new_group = $group_id;
+@endphp
+
 <!-- Horizontal form options -->
 <div class="row">
     <div class="col-md-6">
 
         <!-- Basic layout-->
-        <form method="post" action="{{ route('groups.change', $group_id) }}" id="project-create"
+        <form method="post" action="{{ route('groups.changed', $group_id) }}" id="project-create"
                 enctype="multipart/form-data" class="form-horizontal">
             @csrf
+            <input type="text" style="display:none" id="new_group" />
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <h5 class="panel-title">Change group</h5>
@@ -19,7 +24,7 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Group:</label>
                         <div class="col-lg-9">
-                            <select name="group_id" class="select">
+                            <select name="new_group" class="select">
                                 @foreach($groups as $group)
                                     <option
                                             value="{{ $group->id }}"
