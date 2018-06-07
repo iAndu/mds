@@ -6,7 +6,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use \App\User;
-use \App\Group;
+use \App\Project;
 
 class ProjectOperationsDuskTest extends DuskTestCase
 {
@@ -35,15 +35,15 @@ class ProjectOperationsDuskTest extends DuskTestCase
                     ->type('name', '_TEST_PROJECT_NAME_')
                     ->assertSee('Group:')
                     ->select('group_id') //selects a random option if not specifying second parameter which is the value
-                    ->assertSee('Project avatar:');
+                    ->assertSee('Project avatar:')
                     //->attach('avatar', '../../storage/app/public/project_avatars/default.png')
-                    //->press('submitBtn')
-                    //->assertSee('{"status":"success","message":"Project created successfully."}');
+                    ->press('submitBtn')
+                    ->assertSee('{"status":"success","message":"Project created successfully."}');
 
             //delete
             //need to first delete from projects_role_user
             //would be better if we used ON DELETE CASCADE
-            //Group::where('name', '_TEST_GROUP_NAME_')->delete();
+            Project::where('name', '_TEST_PROJECT_NAME_')->delete();
         });
     }
 }

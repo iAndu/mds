@@ -171,7 +171,6 @@ class TasksController extends Controller
                 //$task->save();
             }
         }
-
     }
 
     public function changePriority(Request $request)
