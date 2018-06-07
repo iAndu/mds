@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use \App\User;
 use \App\Group;
 
-class ExampleTest extends DuskTestCase
+class GroupOperationsDuskTest extends DuskTestCase
 {
     private $userId = 11;
 

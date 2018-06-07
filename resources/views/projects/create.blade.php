@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Group</label>
+                        <label class="col-lg-3 control-label">Group:</label>
                         <div class="col-lg-9">
                             <select name="group_id" class="select">
                                 @foreach($groups as $group)
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit form <i class="icon-arrow-right14 position-right"></i></button>
+                        <button type="submit" class="btn btn-primary" name="submitBtn">Submit form <i class="icon-arrow-right14 position-right"></i></button>
                     </div>
                 </div>
             </div>
