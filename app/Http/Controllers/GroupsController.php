@@ -14,9 +14,10 @@ class GroupsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($group_id)
     {
-        
+        $groups = Group::all();
+        return view('groups.index', compact('groups', 'group_id'));
     }
 
     /**

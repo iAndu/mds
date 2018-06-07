@@ -15,7 +15,7 @@
             </div>
 
             <div class="thumb">
-                <img src="{{ asset($group->avatar) }}" alt="">
+                <img src="{{ asset($group->group_avatar) }}" alt="">
                 <div class="caption-overflow">
 									{{--<span>
                                         <a href="#" class="btn bg-success-400 btn-icon legitRipple"
