@@ -72,16 +72,20 @@ class TaskOperationsDuskTest extends DuskTestCase
                     ->assertSee('{"status":"success","message":"Task created successfully"}');
 
             //4. Assign task
+            $task = (Task::where('title', '_TEST_TASK_TITLE_')->get())[0];
+            $testUser = factory(User::class)->make();
+            $task->users()->attach($testUser->id);
 
             //5. Checks
 
             //6. Deletes
             //delete task
-            //Task::where('title', '_TEST_TASK_TITLE_')->delete();
+            //the user will automatically get deleted
+            Task::where('title', '_TEST_TASK_TITLE_')->delete();
             //delete project
-            //Project::where('name', '_TEST_PROJECT_NAME_')->delete();
+            Project::where('name', '_TEST_PROJECT_NAME_')->delete();
             //delete group
-           // Group::where('name', '_TEST_GROUP_NAME_')->delete();
+            Group::where('name', '_TEST_GROUP_NAME_')->delete();
         });
     }
 }
