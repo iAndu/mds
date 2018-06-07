@@ -7,7 +7,7 @@
     <div class="col-md-6">
 
         <!-- Basic layout-->
-        <form method="post" action="{{ route('projects.store') }}" id="project-create"
+        <form method="post" action="{{ route('projects.store', $group_id) }}" id="project-create"
                 enctype="multipart/form-data" class="form-horizontal">
             @csrf
             <div class="panel panel-flat">

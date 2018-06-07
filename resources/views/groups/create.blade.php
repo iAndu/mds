@@ -7,7 +7,7 @@
     <div class="col-md-6">
 
         <!-- Basic layout-->
-        <form method="POST" action="{{ route('groups.store') }}" id="group-create"
+        <form method="POST" action="{{ route('groups.store', $group_id) }}" id="group-create"
                 enctype="multipart/form-data" class="form-horizontal">
             @csrf
             <div class="panel panel-flat">

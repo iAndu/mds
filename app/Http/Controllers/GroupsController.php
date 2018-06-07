@@ -24,9 +24,9 @@ class GroupsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($group_id)
     {
-        return view('groups.create');
+        return view('groups.create', compact('group_id'));
     }
 
     /**

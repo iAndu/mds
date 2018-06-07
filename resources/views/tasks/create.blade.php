@@ -7,7 +7,7 @@
     <div class="col-md-6">
 
         <!-- Basic layout-->
-        <form method="post" action="{{ route('tasks.store') }}" id="task-create"
+        <form method="post" action="{{ route('tasks.store', $group_id) }}" id="task-create"
                 enctype="multipart/form-data" class="form-horizontal">
             @csrf
             <div class="panel panel-flat">

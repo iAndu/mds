@@ -423,7 +423,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data:{task:task},
-                        url:'/tasks/toggleSubtask',
+                        url:'/' + '{{ $group_id }}' + '/tasks/toggleSubtask',
                         method:'POST',
                         //dataType : "text/csv",
                         success:function(data){
@@ -484,7 +484,7 @@
                     let instance_name = 'add_comment' + $(this).data('id');
                     let _data = CKEDITOR.instances[instance_name].getData();
 
-                    let route = "{{ route('comments.store') }}";
+                    let route = '/' + '{{ $group_id }}' + "{{ route('comments.store', $group_id) }}";
                     let $this = $(this);
                     let taskId = $this.data('id');
                     let userId = @php echo Auth::user()->id @endphp;
@@ -559,7 +559,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
             data:{elements: elements, task:task},
-            url:'/tasks/assign',
+            url: '/' + '{{ $group_id }}' + '/tasks/assign',
             method:'POST',
             //dataType : "text/csv",
             success:function(data){
@@ -585,7 +585,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
             data:{task:task, priority:priority},
-            url:'/tasks/changePriority',
+            url:'/' + '{{ $group_id }}' + '/tasks/changePriority',
             method:'POST',
             //dataType : "text/csv",
             success:function(data){

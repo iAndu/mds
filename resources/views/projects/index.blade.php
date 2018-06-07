@@ -180,7 +180,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{elements: userIds, project:project},
-                url:'/projects/assign',
+                url:'/' + '{{ $group_id }}' + '/projects/assign',
                 method:'POST',
                 //dataType : "text/csv",
                 success:function(data){

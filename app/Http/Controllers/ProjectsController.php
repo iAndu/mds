@@ -18,13 +18,13 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($group_id)
     {
-        $projects = Auth::user()->projects;
-        //$projects = $projects->OfGroup(2);
+        $projects = Auth::user()->projects();
+        $projects = $projects->OfGroup($group_id);
         $users = User::all();
 
-        return view('projects.index', compact('projects', 'users'));
+        return view('projects.index', compact('projects', 'users', 'group_id'));
     }
 
     /**
@@ -32,11 +32,11 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($group_id)
     {
         $groups = Auth::user()->groups()->get();
 
-        return view('projects.create', compact('groups'));
+        return view('projects.create', compact('groups', 'group_id'));
     }
 
     /**
@@ -106,11 +106,11 @@ class ProjectsController extends Controller
      * @param  Project  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Project $project, $group_id)
     {
         $users = $project->users;
 
-        return view('projects.show', compact('project', 'users'));
+        return view('projects.show', compact('project', 'users', 'group_id'));
     }
 
     /**
