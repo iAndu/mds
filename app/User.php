@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use App\Group;
 use App\Project;
+use App\Message;
 
 class User extends Authenticatable
 {
@@ -72,5 +73,28 @@ class User extends Authenticatable
         $userGroups = Group::where('user_id', $this->id);
 
         return Group::whereIn('id', $groupIds)->union($userGroups);
+    }
+
+    public function sentMessages()
+    {
+	return $this->hasMany(Message::class, 'from');
+    }
+
+    public function receivedMessages()
+    {
+	return $this->hasMany(Message::class, 'to');
+    }
+
+    public function messages()
+    {
+	return Message::where('from', $this->id)->orWhere('to', $this->id);
+    }
+
+    public function messagesWith(User $user)
+    {
+	$sentMessages = $this->sentMessages()->where('to', $user->id)->get();
+        $receivedMessages = $this->receivedMessages()->where('from', $user->id)->get();
+	
+	return $sentMessages->merge($receivedMessages);
     }
 }

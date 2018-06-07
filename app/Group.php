@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Project;
 use App\Task;
+use DB;
 
 class Group extends Model
 {

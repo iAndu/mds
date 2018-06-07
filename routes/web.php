@@ -28,5 +28,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/tasks/toggleSubtask', ['as'=>'tasks.toggleSubtask', 'uses'=>'TasksController@toggleSubtask']);
     Route::resource('tasks', 'TasksController');
     Route::resource('comments', 'CommentsController');
-
+    Route::get('{group}/chat/{user?}', ['as' => 'chat.index', 'uses' => 'ChatController@index']);
+    Route::post('chat/send', ['as' => 'chat.send', 'uses' => 'ChatController@send']);
+    Route::get('chat/get', ['as' => 'chat.get', 'uses' => 'ChatController@get']);
 });
