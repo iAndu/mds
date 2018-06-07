@@ -15,7 +15,7 @@ class Task extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(\App\User::class)->withPivot('role_id');
+        return $this->belongsToMany(\App\User::class);
     }
 
     /**

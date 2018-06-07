@@ -50,6 +50,18 @@ class TasksController extends Controller
             'project_id' => $request->project_id,
         ]);
 
+	if (isset($request->subtask)) {
+		foreach ($request->subtask as $stask) {
+			Task::create([
+				'title' => $stask['title'],
+				'description' => $stask['description'],
+				'priority' => $stask['priority'],
+				'project_id' => $request->project_id,
+				'task_id' => $task->id
+			]);
+		}
+	}
+
         return response()->json([
             'status' => 'success',
             'message' => 'Task created successfully'
@@ -72,7 +84,7 @@ class TasksController extends Controller
      */
     public function show()
     {
-
+        return $task;
     }
 
     /**

@@ -111,21 +111,21 @@
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label" for="subTaskTitle{{ $item }}">Title</label>
+                                    <label class="col-lg-3 control-label" for="subtask[{{ $item  }}][title]">Title</label>
                                     <div class="col-lg-9">
-                                        <input id="subTaskTitle{{ $item }}" name="subTaskTitle{{ $item }}" type="text" class="form-control">
+                                        <input id="subTaskTitle{{ $item }}" name="subtask[{{ $item  }}][title]" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label" for="subTaskDescription{{ $item }}">Description</label>
+                                    <label class="col-lg-3 control-label" for="subtask[{{ $item }}][description]">Description</label>
                                     <div class="col-lg-9">
-                                        <input id="subTaskDescription{{ $item }}" name="subTaskDescription{{ $item }}" type="text" class="form-control">
+                                        <input id="subTaskDescription{{ $item }}" name="subtask[{{ $item }}][description]" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label" for="subTaskPriority{{ $item }}">Priority</label>
+                                    <label class="col-lg-3 control-label" for="subtask[{{ $item }}][priority]">Priority</label>
                                     <div class="col-lg-9">
-                                        <select id="subTaskPriority{{ $item }}" name="subTaskPriority{{ $item }}" class="select">
+                                        <select id="subTaskPriority{{ $item }}" name="subtask[{{ $item }}][priority]" class="select">
                                             <option value="1">Low</option>
                                             <option value="2">Normal</option>
                                             <option value="3">High</option>
