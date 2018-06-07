@@ -31,10 +31,15 @@
                                                 }
                                             @endphp</p>
 
+                                        @php
+                                            $contor = 0;
+                                        @endphp
                                         @foreach($taskInfo['usersWithAssigned'] as $userInfo)
-                                            <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-xs" alt=""></a>
+                                            @if($userInfo['isAssigned'] == true)
+                                                <a href="#"><img src="{{ asset($userInfo['user']->avatar) }}" class="img-circle img-xs" alt=""></a>
+                                            @endif
                                             @php
-                                                if($loop->index > 2)
+                                                if($contor > 2)
                                                     break;
                                             @endphp
                                         @endforeach
@@ -505,7 +510,7 @@
                             {
                                 let elToAdd = '<li class="media">' +
                                     '<div class="media-left">' +
-                                    '    <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></a>' +
+                                    '    <a href="#"><img src="{{ asset(Auth::user()->avatar) }}" class="img-circle img-sm" alt=""></a>' +
                                     '</div>' +
                                     '' +
                                     '<div class="media-body">' +
