@@ -12,13 +12,6 @@
             ">
             <div class="panel-heading">
                 <h6 class="panel-title">{{ $project->name }}<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                <div class="heading-elements">
-                    <ul class="icons-list">
-                        <li><a href="#"><i class="icon-google-drive"></i></a></li>
-                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="#"><i class="icon-twitter"></i></a></li>
-                    </ul>
-                </div>
             </div>
 
             <div class="thumb">
@@ -27,7 +20,8 @@
 									<span>
                                         <a href="#" class="btn bg-success-400 btn-icon legitRipple"
                                            data-toggle="modal" data-target="#modal_project{{ $project->id }}"><i class="icon-eye"></i></a>
-										<a href="#" class="btn bg-success-400 btn-icon legitRipple"><i class="icon-pencil"></i></a>
+										<a href="#" class="btn bg-success-400 btn-icon legitRipple"
+                                            data-toggle="modal" data-target="#modal_assign{{ $project->id }}"><i class="icon-users"></i></a>
 									</span>
                 </div>
             </div>
@@ -78,6 +72,52 @@
                 </div>
             </div>
         </div>
+        <!-- modal for assign -->
+        <div id="modal_assign{{ $project->id }}" class="modal fade" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h3 class="modal-title">Assign users to project {{ $project->name }}</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="content-group-lg">
+                            <select
+                                    class="select-multiple-tokenization select2-hidden-accessible"
+                                    multiple=""
+                                    tabindex="-1"
+                                    aria-hidden="true"
+                                    id="selectUserAssign{{ $project->id }}"
+                            >
+                                @foreach($users as $user)
+                                    <option
+                                            value="{{ $user->id }}"
+                                            @php
+                                                $selected = false;
+                                                foreach($user->projects as $userProject)
+                                                {
+                                                    if($userProject->id == $project->id)
+                                                    {
+                                                        $selected = true;
+                                                        break;
+                                                    }
+                                                }
+                                            @endphp
+                                            @if($selected == true) selected="selected" @endif
+                                    >{{ $user->name }}</option>
+                                @endforeach
+                            </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onClick = "assignUsers( {{ $project->id }} )">Submit<i class="icon-arrow-right14 position-right" ></i></button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link legitRipple" data-dismiss="modal">Close<span class="legitRipple-ripple" style="left: 60.6506%; top: 46.3158%; transform: translate3d(-50%, -50%, 0px); width: 225.475%; opacity: 0;"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     @endforeach
 </div>
@@ -96,14 +136,17 @@
 
 @push('js')
 
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/core/libraries/jquery_ui/interactions.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/media/fancybox.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/components_thumbnails.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/animations_css3.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/bootbox.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/components_modals.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/pages/form_select2.js') }}"></script>
 
     <script type="text/javascript">
         $(window).load(function(){
@@ -119,5 +162,37 @@
                 });
             }
         });
+
+        function assignUsers(project)
+        {
+            console.log(project);
+            var sel = document.getElementById('selectUserAssign' + project);
+            console.log('Select : ' + sel);
+            console.log('Options : ' + sel.options);
+            var userIds = [];
+            for(var i = 0 ; i < sel.options.length ; i++)
+                if(sel.options[i].selected)
+                    userIds.push(sel.options[i].value);
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{elements: userIds, project:project},
+                url:'/projects/assign',
+                method:'POST',
+                //dataType : "text/csv",
+                success:function(data){
+                    new PNotify({
+                        text: 'Users successfully assigned to project!',
+                        addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
+                    });
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                }
+            });
+        }
     </script>
 @endpush

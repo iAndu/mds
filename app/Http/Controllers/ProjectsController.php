@@ -21,8 +21,9 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = Auth::user()->projects;
+        $users = User::all();
 
-        return view('projects.index', compact('projects'));
+        return view('projects.index', compact('projects', 'users'));
     }
 
     /**
@@ -70,7 +71,31 @@ class ProjectsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Project created successfuly.'
+            'message' => 'Project created successfully.'
+        ]);
+    }
+
+    public function assign(Request $request)
+    {
+        $elements = $request->input('elements');
+        $project = Project::find($request->input("project"));
+
+        $project->users()->detach();
+        $project->save();
+
+        if($elements)
+        {
+            foreach($elements as $element)
+            {
+                $user_id = (int)$element;
+                $project->users()->attach($user_id);
+                //$task->save();
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Users successfully assigned to project'
         ]);
     }
 
