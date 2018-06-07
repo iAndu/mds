@@ -489,7 +489,7 @@
                     let instance_name = 'add_comment' + $(this).data('id');
                     let _data = CKEDITOR.instances[instance_name].getData();
 
-                    let route = '/' + '{{ $group_id }}' + "{{ route('comments.store', $group_id) }}";
+                    let route = "{{ route('comments.store', $group_id) }}";
                     let $this = $(this);
                     let taskId = $this.data('id');
                     let userId = @php echo Auth::user()->id @endphp;
