@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationComplete;
+use Request;
 
 class RegisterController extends Controller
 {
@@ -65,10 +66,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $request = request();
+        
+        if ($request->avatar) {
+            $path = $request->file('avatar')->store('public/user_avatars');
+        } else {
+            $path = 'public/user_avatars/default.jpg';
+        }
+
+        $path = 'storage/' . substr($path, strpos($path, '/') + 1);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'avatar' => $path,
         ]);
 
 	Mail::to($user->email)->send(new RegistrationComplete($user));

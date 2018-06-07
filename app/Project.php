@@ -37,4 +37,9 @@ class Project extends Model
     {
         return $this->belongsToMany(\App\User::class, 'project_role_user')->withPivot('role_id');
     }
+
+    public function scopeOfGroup($query, $group_id)
+    {
+        return $query->get()->where('group_id', $group_id);
+    }
 }

@@ -39,7 +39,7 @@ class GroupsController extends Controller
     {
         $photo = $request->file('avatar');
 
-        $photo_path = 'public/group_avatars/default.png';
+        $photo_path = 'public/group_avatars/default.jpg';
 
         if($photo) 
         {

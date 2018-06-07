@@ -21,6 +21,7 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = Auth::user()->projects;
+        //$projects = $projects->OfGroup(2);
         $users = User::all();
 
         return view('projects.index', compact('projects', 'users'));
@@ -56,7 +57,7 @@ class ProjectsController extends Controller
         if ($request->avatar) {
             $path = $request->file('avatar')->store('public/project_avatars');
         } else {
-            $path = 'public/project_avatars/default.png';
+            $path = 'public/project_avatars/default.jpg';
         }
 
         $path = 'storage/' . substr($path, strpos($path, '/') + 1);

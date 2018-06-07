@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -58,6 +58,14 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Avatar:</label>
+                            <div class="col-lg-9">
+                                <input name="avatar" id="avatar" type="file" class="file-styled">
+                                <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
                             </div>
                         </div>
 

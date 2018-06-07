@@ -296,7 +296,7 @@
                                                                 @foreach($taskInfo['task']->comments as $comment)
                                                                     <li class="media">
                                                                         <div class="media-left">
-                                                                            <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></a>
+                                                                            <a href="#"><img src="{{ asset($comment->user->avatar) }}" class="img-circle img-sm" alt=""></a>
                                                                         </div>
 
                                                                         <div class="media-body">

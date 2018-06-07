@@ -27,7 +27,7 @@
                         <li class="media">
                             <div class="media-left media-middle">
                                 <a href="#">
-                                    <img src="{{ $user->avatar }}" class="img-circle img-md" alt="">
+                                    <img src="{{ asset($user->avatar) }}" class="img-circle img-md" alt="">
                                 </a>
                             </div>
 
