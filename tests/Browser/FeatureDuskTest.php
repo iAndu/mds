@@ -10,7 +10,7 @@ use \App\Task;
 use \App\Project;
 use \App\Group;
 
-class TaskOperationsDuskTest extends DuskTestCase
+class FeatureDuskTest extends DuskTestCase
 {
     private $userId = 11;
 
