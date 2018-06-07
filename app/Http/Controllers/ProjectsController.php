@@ -89,7 +89,7 @@ class ProjectsController extends Controller
             foreach($elements as $element)
             {
                 $user_id = (int)$element;
-                $project->users()->attach($user_id);
+                $project->users()->attach($user_id, ['role_id' => 1]);
                 //$task->save();
             }
         }
