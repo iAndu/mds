@@ -138,7 +138,7 @@
                     @endforeach
 
                     <div class="text-right">
-                        <button id="taskCreateSubmit" type="button" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
+                        <button id="taskCreateSubmit" type="button" class="btn btn-primary" name="submitBtn">Submit<i class="icon-arrow-right14 position-right"></i></button>
                     </div> <!-- submit action is overriden below -->
                 </div>
             </div>
