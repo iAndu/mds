@@ -14,9 +14,10 @@ class GroupsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($group_id)
     {
-        
+        $groups = Group::all();
+        return view('groups.index', compact('groups', 'group_id'));
     }
 
     /**
@@ -24,9 +25,9 @@ class GroupsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($group_id)
     {
-        return view('groups.create');
+        return view('groups.create', compact('group_id'));
     }
 
     /**
@@ -39,7 +40,7 @@ class GroupsController extends Controller
     {
         $photo = $request->file('avatar');
 
-        $photo_path = 'public/group_avatars/default.png';
+        $photo_path = 'public/group_avatars/default.jpg';
 
         if($photo) 
         {
@@ -69,6 +70,21 @@ class GroupsController extends Controller
     public function show($id)
     {
         //
+    }
+    
+    public function change(Request $request, $group_id)
+    {
+        $groups = Group::all();
+        if($request->has('new_group'))
+            $group_id = $request->input('new_group');
+        return view('groups.change', compact('groups', 'group_id'));
+    }
+
+    public function changed(Request $request, $group_id)
+    {
+        if($request->has('new_group'))
+            $group_id = $request->input('new_group');
+        return view('index', compact('group_id'));
     }
 
     /**

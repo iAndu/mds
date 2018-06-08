@@ -22,19 +22,24 @@
                                         <h6 class="no-margin-top">
                                             <a href="#" data-toggle="modal" data-target="#modal_task{{ $taskInfo['task']->id }}">{{ $taskInfo['task']->title }}</a></h6>
                                         <p class="mb-15">@php
-                                                if(strlen($taskInfo['task']->title) <= 50)
-                                                    echo $taskInfo['task']->title;
+                                                if(strlen($taskInfo['task']->description) <= 50)
+                                                    echo $taskInfo['task']->description;
                                                 else
                                                 {
-                                                    $descSubstr = substr($taskInfo['task']->title, 0, 50) . "..";
+                                                    $descSubstr = substr($taskInfo['task']->description, 0, 50) . "..";
                                                     echo $descSubstr;
                                                 }
                                             @endphp</p>
 
+                                        @php
+                                            $contor = 0;
+                                        @endphp
                                         @foreach($taskInfo['usersWithAssigned'] as $userInfo)
-                                            <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-xs" alt=""></a>
+                                            @if($userInfo['isAssigned'] == true)
+                                                <a href="#"><img src="{{ asset($userInfo['user']->avatar) }}" class="img-circle img-xs" alt=""></a>
+                                            @endif
                                             @php
-                                                if($loop->index > 2)
+                                                if($contor > 2)
                                                     break;
                                             @endphp
                                         @endforeach
@@ -296,7 +301,7 @@
                                                                 @foreach($taskInfo['task']->comments as $comment)
                                                                     <li class="media">
                                                                         <div class="media-left">
-                                                                            <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></a>
+                                                                            <a href="#"><img src="{{ asset($comment->user->avatar) }}" class="img-circle img-sm" alt=""></a>
                                                                         </div>
 
                                                                         <div class="media-body">
@@ -423,7 +428,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data:{task:task},
-                        url:'/tasks/toggleSubtask',
+                        url:'/' + '{{ $group_id }}' + '/tasks/toggleSubtask',
                         method:'POST',
                         //dataType : "text/csv",
                         success:function(data){
@@ -484,7 +489,7 @@
                     let instance_name = 'add_comment' + $(this).data('id');
                     let _data = CKEDITOR.instances[instance_name].getData();
 
-                    let route = "{{ route('comments.store') }}";
+                    let route = "{{ route('comments.store', $group_id) }}";
                     let $this = $(this);
                     let taskId = $this.data('id');
                     let userId = @php echo Auth::user()->id @endphp;
@@ -505,7 +510,7 @@
                             {
                                 let elToAdd = '<li class="media">' +
                                     '<div class="media-left">' +
-                                    '    <a href="#"><img src="{{ URL::asset('limitless/assets/images/placeholder.jpg') }}" class="img-circle img-sm" alt=""></a>' +
+                                    '    <a href="#"><img src="{{ asset(Auth::user()->avatar) }}" class="img-circle img-sm" alt=""></a>' +
                                     '</div>' +
                                     '' +
                                     '<div class="media-body">' +
@@ -559,12 +564,12 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
             data:{elements: elements, task:task},
-            url:'/tasks/assign',
+            url: '/' + '{{ $group_id }}' + '/tasks/assign',
             method:'POST',
             //dataType : "text/csv",
             success:function(data){
                 new PNotify({
-                    text: 'Task successfully asigned to users!',
+                    text: 'Task successfully assigned to users!',
                     addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
                 });
             },
@@ -585,7 +590,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
             data:{task:task, priority:priority},
-            url:'/tasks/changePriority',
+            url:'/' + '{{ $group_id }}' + '/tasks/changePriority',
             method:'POST',
             //dataType : "text/csv",
             success:function(data){

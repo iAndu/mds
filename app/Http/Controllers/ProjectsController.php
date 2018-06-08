@@ -18,11 +18,13 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($group_id)
     {
-        $projects = Auth::user()->projects;
+        $projects = Auth::user()->projects();
+        $projects = $projects->OfGroup($group_id);
+        $users = User::all();
 
-        return view('projects.index', compact('projects'));
+        return view('projects.index', compact('projects', 'users', 'group_id'));
     }
 
     /**
@@ -30,11 +32,11 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($group_id)
     {
         $groups = Auth::user()->groups()->get();
 
-        return view('projects.create', compact('groups'));
+        return view('projects.create', compact('groups', 'group_id'));
     }
 
     /**
@@ -55,7 +57,7 @@ class ProjectsController extends Controller
         if ($request->avatar) {
             $path = $request->file('avatar')->store('public/project_avatars');
         } else {
-            $path = 'public/project_avatars/default.png';
+            $path = 'public/project_avatars/default.jpg';
         }
 
         $path = 'storage/' . substr($path, strpos($path, '/') + 1);
@@ -70,7 +72,31 @@ class ProjectsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Project created successfuly.'
+            'message' => 'Project created successfully.'
+        ]);
+    }
+
+    public function assign(Request $request)
+    {
+        $elements = $request->input('elements');
+        $project = Project::find($request->input("project"));
+
+        $project->users()->detach();
+        $project->save();
+
+        if($elements)
+        {
+            foreach($elements as $element)
+            {
+                $user_id = (int)$element;
+                $project->users()->attach($user_id, ['role_id' => 1]);
+                //$task->save();
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Users successfully assigned to project'
         ]);
     }
 
@@ -80,11 +106,11 @@ class ProjectsController extends Controller
      * @param  Project  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Project $project, $group_id)
     {
         $users = $project->users;
 
-        return view('projects.show', compact('project', 'users'));
+        return view('projects.show', compact('project', 'users', 'group_id'));
     }
 
     /**

@@ -22,23 +22,24 @@
                     <li>
                         <a href="#"><i class="icon-stack2"></i> <span>Projects</span></a>
                         <ul>
-                            <li><a href="{{ route('projects.index') }}">Project list</a></li>
-                            <li><a href="{{ route('projects.create') }}">Project create</a></li>
+                            <li><a href="{{ route('projects.index', $group_id) }}">Project list</a></li>
+                            <li><a href="{{ route('projects.create', $group_id) }}">Project create</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="icon-copy"></i> <span>Tasks</span></a>
                         <ul>
-                            <li><a href="{{ route('tasks.index') }}" id="layout1">My tasks</a></li>
-                            <li><a href="{{ route('tasks.create') }}" id="layout1">Create task</a></li>
-                            <li><a href="{{ route('tasks.all') }}" id="layout1">All tasks</a></li>
+                            <li><a href="{{ route('tasks.index', $group_id) }}" id="layout1">My tasks</a></li>
+                            <li><a href="{{ route('tasks.create', $group_id) }}" id="layout1">Create task</a></li>
+                            <li><a href="{{ route('tasks.all', $group_id) }}" id="layout1">All tasks</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="icon-copy"></i> <span>Groups</span></a>
                         <ul>
-                            {{-- <li><a href="{{ route('groups.index') }}" id="layout1">Group list</a></li> --}}
-                            <li><a href="{{ route('groups.create') }}" id="layout1">Group create</a></li>
+                            <li><a href="{{ route('groups.index', $group_id) }}" id="layout1">Group list</a></li>
+                            <li><a href="{{ route('groups.create', $group_id) }}" id="layout1">Group create</a></li>
+                            <li><a href="{{ route('groups.change', $group_id) }}" id="layout1">Group change</a></li>
                         </ul>
                     </li>
 

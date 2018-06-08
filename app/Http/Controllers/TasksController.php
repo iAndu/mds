@@ -15,11 +15,11 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($group_id)
     {
         $tasks = Auth::user()->tasks()->get();
 
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks', 'group_id'));
     }
 
     /**
@@ -27,11 +27,11 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($group_id)
     {
         $projects = Auth::user()->projects()->get();
 
-        return view('tasks.create', compact('projects'));
+        return view('tasks.create', compact('projects', 'group_id'));
     }
 
     /**
@@ -110,7 +110,7 @@ class TasksController extends Controller
         //
     }
 
-    public function all()
+    public function all($group_id)
     {
         $projects = Auth::user()->projects()->get();
         $tasksByProjects = [];
@@ -151,7 +151,7 @@ class TasksController extends Controller
         $priorityToStyle['urgent'] = 'danger';
 
         //dd($tasksByProjects);
-        return view('tasks.all', compact('tasksByProjects', 'priorityToStyle'));
+        return view('tasks.all', compact('tasksByProjects', 'priorityToStyle', 'group_id'));
     }
 
     public function assign(Request $request)
@@ -171,7 +171,6 @@ class TasksController extends Controller
                 //$task->save();
             }
         }
-
     }
 
     public function changePriority(Request $request)

@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationComplete;
+use Request;
+use App\Group;
+use App\Project;
+use App\Role;
 
 class RegisterController extends Controller
 {
@@ -65,11 +69,53 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $request = request();
+        
+        if ($request->avatar) {
+            $path = $request->file('avatar')->store('public/user_avatars');
+        } else {
+            $path = 'public/user_avatars/default.jpg';
+        }
+
+        $path = 'storage/' . substr($path, strpos($path, '/') + 1);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'avatar' => $path,
         ]);
+
+        //Create group
+
+        $photo_path = 'public/group_avatars/default.jpg';
+
+        $photo_path = 'storage/' . substr($photo_path, strpos($photo_path, '/') + 1);
+
+        $group = Group::create([
+            'name' => $data['name'],
+            'user_id' => $user->id,
+            'group_avatar' => $photo_path
+        ]);
+
+        //Create project
+
+        $pm = Role::where('name', 'project-manager')->first();
+
+        if (!$pm) {
+            abort(500);
+        }
+
+        $path = 'public/project_avatars/default.jpg';
+
+        $path = 'storage/' . substr($path, strpos($path, '/') + 1);
+
+        $project = Project::create([
+            'name' => $data['name'],
+            'group_id' => $group->id,
+            'avatar' => $path
+        ]);
+
+        $user->projects()->attach([$project->id => ['role_id' => $pm->id]]);
 
 	Mail::to($user->email)->send(new RegistrationComplete($user));
 

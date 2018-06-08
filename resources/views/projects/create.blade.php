@@ -7,7 +7,7 @@
     <div class="col-md-6">
 
         <!-- Basic layout-->
-        <form method="post" action="{{ route('projects.store') }}" id="project-create"
+        <form method="post" action="{{ route('projects.store', $group_id) }}" id="project-create"
                 enctype="multipart/form-data" class="form-horizontal">
             @csrf
             <div class="panel panel-flat">
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Group</label>
+                        <label class="col-lg-3 control-label">Group:</label>
                         <div class="col-lg-9">
                             <select name="group_id" class="select">
                                 @foreach($groups as $group)
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Group avatar:</label>
+                        <label class="col-lg-3 control-label">Project avatar:</label>
                         <div class="col-lg-9">
                             <input name="avatar" type="file" class="file-styled">
                             <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit form <i class="icon-arrow-right14 position-right"></i></button>
+                        <button type="submit" class="btn btn-primary" name="submitBtn">Submit form <i class="icon-arrow-right14 position-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -53,3 +53,33 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/pnotify.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(window).load(function(){
+            // jQuery, bind an event handler or use some other way to trigger ajax call.
+            $('form').submit(function( event ) {
+                event.preventDefault();
+                let URL = $(this).attr('action');
+                $.ajax({
+                    url: URL,
+                    type: 'post',
+                    data: $('form').serialize(), // Remember that you need to have your csrf token included
+                    dataType: 'json',
+                    success:function(data){
+                        new PNotify({
+                            text: 'Project successfully created!',
+                            addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
+                        });
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $group_id = Auth::user()->groups()->first();
+        return view('home', compact('group_id'));
     }
 }
