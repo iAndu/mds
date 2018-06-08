@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Group:</label>
                         <div class="col-lg-9">
-                            <select name="new_group" class="select">
+                            <select id="groupChangeSelect" name="new_group" class="select">
                                 @foreach($groups as $group)
                                     <option
                                             value="{{ $group->id }}"
@@ -48,3 +48,25 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+
+    <script type="text/javascript" src="{{ URL::asset('limitless/assets/js/plugins/notifications/pnotify.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(window).load(function(){
+            // jQuery, bind an event handler or use some other way to trigger ajax call.
+            $('form').submit(function( event ) {
+                event.preventDefault();
+                new PNotify({
+                    text: 'Group successfully changed!',
+                    addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
+                });
+                var handlerId = setTimeout(function() {
+                    let groupId = document.getElementById('groupChangeSelect').value;
+                    window.location.replace('/' + groupId + '/groups/change');
+                }, 1500);
+            });
+        });
+    </script>
+@endpush

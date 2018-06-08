@@ -203,6 +203,10 @@
                             text: 'Task successfully created!',
                             addclass: 'alert alert-styled-left alert-styled-custom alert-arrow-left bg-success'
                         });
+                        var handlerId = setTimeout(function() {
+                            let groupId = {{ $group_id }};
+                            window.location.replace('/' + groupId + '/tasks/create');
+                        }, 1500);
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                         alert("Status: " + textStatus); alert("Error: " + errorThrown);

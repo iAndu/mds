@@ -80,13 +80,6 @@ class GroupsController extends Controller
         return view('groups.change', compact('groups', 'group_id'));
     }
 
-    public function changed(Request $request, $group_id)
-    {
-        if($request->has('new_group'))
-            $group_id = $request->input('new_group');
-        return view('index', compact('group_id'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
