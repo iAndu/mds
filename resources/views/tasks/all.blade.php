@@ -22,11 +22,11 @@
                                         <h6 class="no-margin-top">
                                             <a href="#" data-toggle="modal" data-target="#modal_task{{ $taskInfo['task']->id }}">{{ $taskInfo['task']->title }}</a></h6>
                                         <p class="mb-15">@php
-                                                if(strlen($taskInfo['task']->title) <= 50)
-                                                    echo $taskInfo['task']->title;
+                                                if(strlen($taskInfo['task']->description) <= 50)
+                                                    echo $taskInfo['task']->description;
                                                 else
                                                 {
-                                                    $descSubstr = substr($taskInfo['task']->title, 0, 50) . "..";
+                                                    $descSubstr = substr($taskInfo['task']->description, 0, 50) . "..";
                                                     echo $descSubstr;
                                                 }
                                             @endphp</p>
